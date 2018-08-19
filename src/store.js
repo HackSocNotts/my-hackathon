@@ -10,8 +10,8 @@ import {
   compose,
 } from 'redux';
 import thunk from 'redux-thunk';
-
 import reducers from './Reducers';
+import { firebaseEnhancer, firestoreEnhancer } from './Reducers/firebase';
 
 // const history = createBrowserHistory();
 
@@ -26,6 +26,8 @@ const store = createStore(combineReducers(reducers),
       thunk,
     ),
     devTools,
+    firebaseEnhancer,
+    firestoreEnhancer,
   ));
 
 export default store;
