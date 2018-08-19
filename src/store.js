@@ -5,7 +5,6 @@ import { connectRouter, routerMiddleware } from 'connected-react-router';
 */
 import {
   createStore,
-  combineReducers,
   applyMiddleware,
   compose,
 } from 'redux';
