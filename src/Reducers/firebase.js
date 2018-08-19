@@ -7,8 +7,10 @@ import 'firebase/functions';
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-firebase.firestore();
 firebase.functions();
+const firestore = firebase.firestore();
+const firestoreSettings = { timestampsInSnapshots: true };
+firestore.settings(firestoreSettings);
 
 // React redux firebase config
 const rrfConfig = {
