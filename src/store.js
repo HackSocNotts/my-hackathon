@@ -19,7 +19,7 @@ import { firebaseEnhancer, firestoreEnhancer } from './Reducers/firebase';
 const devTools = window.devToolsExtension ? window.devToolsExtension() : f => f;
 
 // const store = createStore(connectRouter(history)(combineReducers(reducers))
-const store = createStore(combineReducers(reducers),
+const store = createStore(reducers,
   compose(
     applyMiddleware(
       // routerMiddleware(history),
