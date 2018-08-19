@@ -12,4 +12,8 @@ const reduxFirebase = {
   useFirestoreForProfile: true,
 };
 
-export { firebase, reduxFirebase };
+const siteVars = {
+  hackathonName: 'myHackathon',
+};
+
+export { firebase, reduxFirebase, siteVars };
