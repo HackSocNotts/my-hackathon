@@ -1,8 +1,17 @@
 {
   "name": "my-hackathon",
+  "description": "Hackathon registration and managemnet tool made by HackSoc Nottingham",
   "version": "0.1.0",
-  "private": false,
+  "author": "Aaron Osher <aaron@aaronosher.io>",
+  "license": "AGPL-3.0",
   "homepage": "https://myhackathon-dev.firebaseapp.com/",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "deploy": "npm run buil && firebase deploy --only hosting"
+  },
   "dependencies": {
     "@material-ui/core": "^1.5.0",
     "@material-ui/icons": "^2.0.2",
@@ -18,17 +27,24 @@
     "redux-form": "^7.4.2",
     "redux-thunk": "^2.3.0"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
-  },
   "devDependencies": {
     "eslint": "^5.3.0",
     "eslint-config-airbnb": "17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HackSocNotts/my-hackathon.git"
+  },
+  "keywords": [
+    "Hackathon",
+    "HackSoc",
+    "HackSocNotts",
+    "myHackathon"
+  ],
+  "bugs": {
+    "url": "https://github.com/HackSocNotts/my-hackathon/issues"
   }
 }
