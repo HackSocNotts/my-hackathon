@@ -6,6 +6,7 @@ import './index.css';
 import App from './App';
 import store from './Store';
 import registerServiceWorker from './registerServiceWorker';
+import 'typeface-roboto';
 
 const render = (Component) => {
   ReactDOM.render(
