@@ -4,6 +4,7 @@
     "browser": true
   },
   "rules": {
-    "react/forbid-prop-types": false
+    "react/forbid-prop-types": false,
+    "react/prefer-stateless-function": false
   }
 }
