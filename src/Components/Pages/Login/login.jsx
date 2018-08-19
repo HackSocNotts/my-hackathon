@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { firebaseConnect } from 'react-redux-firebase';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Icon from '@material-ui/core/Icon';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
+import MinimalContainer from '../../../Containers/Minimal';
 import { siteVars } from '../../../config';
 import styles from './styles';
 import logo from '../../../logo.svg';
@@ -59,57 +58,52 @@ class login extends Component {
     const { classes } = this.props;
 
     return (
-      <React.Fragment>
-        <CssBaseline />
-        <main className={classes.layout}>
-          <Paper className={classes.paper}>
-            <img src={logo} className="App-logo" alt="logo" />
-            <Typography variant="headline" gutterBottom>
-              Welcome to&nbsp;
-              {siteVars.hackathonName}
-            </Typography>
-            <Typography variant="subheading">
-              Select a platform to Login With to begin.
-            </Typography>
-            <Button
-              fullWidth
-              variant="raised"
-              color="primary"
-              className={[classes.submit, classes.github].join(' ')}
-              onClick={this.loginWithGitHub}
-            >
-              <Icon className="fab fa-github" />
-            </Button>
-            <Button
-              fullWidth
-              variant="raised"
-              color="primary"
-              className={[classes.submit, classes.twitter].join(' ')}
-              onClick={this.loginWithTwitter}
-            >
-              <Icon className="fab fa-twitter" />
-            </Button>
-            <Button
-              fullWidth
-              variant="raised"
-              color="primary"
-              className={[classes.submit, classes.google].join(' ')}
-              onClick={this.loginWithGoogle}
-            >
-              <Icon className="fab fa-google" />
-            </Button>
-            <Button
-              fullWidth
-              variant="raised"
-              color="primary"
-              className={[classes.submit, classes.facebook].join(' ')}
-              onClick={this.loginWithFacebook}
-            >
-              <Icon className="fab fa-facebook" />
-            </Button>
-          </Paper>
-        </main>
-      </React.Fragment>
+      <MinimalContainer>
+        <img src={logo} className="App-logo" alt="logo" />
+        <Typography variant="headline" gutterBottom>
+          Welcome to&nbsp;
+          {siteVars.hackathonName}
+        </Typography>
+        <Typography variant="subheading">
+          Select a platform to Login With to begin.
+        </Typography>
+        <Button
+          fullWidth
+          variant="raised"
+          color="primary"
+          className={[classes.submit, classes.github].join(' ')}
+          onClick={this.loginWithGitHub}
+        >
+          <Icon className="fab fa-github" />
+        </Button>
+        <Button
+          fullWidth
+          variant="raised"
+          color="primary"
+          className={[classes.submit, classes.twitter].join(' ')}
+          onClick={this.loginWithTwitter}
+        >
+          <Icon className="fab fa-twitter" />
+        </Button>
+        <Button
+          fullWidth
+          variant="raised"
+          color="primary"
+          className={[classes.submit, classes.google].join(' ')}
+          onClick={this.loginWithGoogle}
+        >
+          <Icon className="fab fa-google" />
+        </Button>
+        <Button
+          fullWidth
+          variant="raised"
+          color="primary"
+          className={[classes.submit, classes.facebook].join(' ')}
+          onClick={this.loginWithFacebook}
+        >
+          <Icon className="fab fa-facebook" />
+        </Button>
+      </MinimalContainer>
     );
   }
 }
