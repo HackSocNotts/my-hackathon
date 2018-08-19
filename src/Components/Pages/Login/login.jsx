@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { firebaseConnect } from 'react-redux-firebase';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Icon from '@material-ui/core/Icon';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
@@ -12,6 +13,14 @@ import styles from './styles';
 import logo from '../../../logo.svg';
 
 class login extends Component {
+  state = {
+    loading: {
+      google: false,
+      github: false,
+      facebook: false,
+      twitter: false,
+    },
+  };
   constructor(props) {
     super(props);
     this.login = this.login.bind(this);
@@ -30,32 +39,43 @@ class login extends Component {
 
   login(provider) {
     const { firebase } = this.props;
-    firebase.login({
+    return firebase.login({
       provider,
       type: 'popup',
     })
-      .then(() => console.log(provider))
-      .catch(err => console.error(err));
   }
 
   loginWithGoogle() {
-    this.login('google');
+    this.setState({ loading: { google: true } });
+    this.login('google')
+      .then(() => this.setState({ loading: { google: false } }))
+      .catch(() => this.setState({ loading: { google: false } }));
   }
 
   loginWithFacebook() {
-    this.login('facebook');
+    this.setState({ loading: { facebook: true } });
+    this.login('facebook')
+      .then(() => this.setState({ loading: { facebook: false } }))
+      .catch(() => this.setState({ loading: { facebook: false } }));
   }
 
   loginWithTwitter() {
-    this.login('twitter');
+    this.setState({ loading: { twitter: true } });
+    this.login('twitter')
+      .then(() => this.setState({ loading: { twitter: false } }))
+      .catch(() => this.setState({ loading: { twitter: false } }));
   }
 
   loginWithGitHub() {
-    this.login('github');
+    this.setState({ loading: { github: true } });
+    this.login('github')
+      .then(() => this.setState({ loading: { github: false } }))
+      .catch(() => this.setState({ loading: { github: false } }));
   }
 
   render() {
     const { classes } = this.props;
+    const { loading } = this.state;
 
     return (
       <MinimalContainer>
@@ -67,42 +87,58 @@ class login extends Component {
         <Typography variant="subheading">
           Select a platform to Login With to begin.
         </Typography>
-        <Button
-          fullWidth
-          variant="raised"
-          color="primary"
-          className={[classes.submit, classes.github].join(' ')}
-          onClick={this.loginWithGitHub}
-        >
-          <Icon className="fab fa-github" />
-        </Button>
-        <Button
-          fullWidth
-          variant="raised"
-          color="primary"
-          className={[classes.submit, classes.twitter].join(' ')}
-          onClick={this.loginWithTwitter}
-        >
-          <Icon className="fab fa-twitter" />
-        </Button>
-        <Button
-          fullWidth
-          variant="raised"
-          color="primary"
-          className={[classes.submit, classes.google].join(' ')}
-          onClick={this.loginWithGoogle}
-        >
-          <Icon className="fab fa-google" />
-        </Button>
-        <Button
-          fullWidth
-          variant="raised"
-          color="primary"
-          className={[classes.submit, classes.facebook].join(' ')}
-          onClick={this.loginWithFacebook}
-        >
-          <Icon className="fab fa-facebook" />
-        </Button>
+        <div className={classes.wrapper}>
+          <Button
+            fullWidth
+            variant="raised"
+            color="primary"
+            className={[classes.submit, classes.github].join(' ')}
+            onClick={this.loginWithGitHub}
+            disabled={loading.github}
+          >
+            <Icon className="fab fa-github" />
+          </Button>
+          {loading.github && <CircularProgress size={24} className={[classes.buttonProgress, classes.githubProgress].join(' ')} />}
+        </div>
+        <div className={classes.wrapper}>
+          <Button
+            fullWidth
+            variant="raised"
+            color="primary"
+            className={[classes.submit, classes.twitter].join(' ')}
+            onClick={this.loginWithTwitter}
+            disabled={loading.twitter}
+          >
+            <Icon className="fab fa-twitter" />
+          </Button>
+          {loading.twitter && <CircularProgress size={24} className={[classes.buttonProgress, classes.twitterProgress].join(' ')} />}
+        </div>
+        <div className={classes.wrapper}>
+          <Button
+            fullWidth
+            variant="raised"
+            color="primary"
+            className={[classes.submit, classes.google].join(' ')}
+            onClick={this.loginWithGoogle}
+            disabled={loading.google}
+          >
+            <Icon className="fab fa-google" />
+          </Button>
+          {loading.google && <CircularProgress size={24} className={[classes.buttonProgress, classes.googleProgress].join(' ')} />}
+        </div>
+        <div className={classes.wrapper}>
+          <Button
+            fullWidth
+            variant="raised"
+            color="primary"
+            className={[classes.submit, classes.facebook].join(' ')}
+            onClick={this.loginWithFacebook}
+            disabled={loading.facebook}
+          >
+            <Icon className="fab fa-facebook" />
+          </Button>
+          {loading.facebook && <CircularProgress size={24} className={[classes.buttonProgress, classes.facebookProgress].join(' ')} />}
+        </div>
       </MinimalContainer>
     );
   }
