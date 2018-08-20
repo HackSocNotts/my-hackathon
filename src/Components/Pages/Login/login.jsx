@@ -13,16 +13,17 @@ import styles from './styles';
 import logo from '../../../logo.svg';
 
 class login extends Component {
-  state = {
-    loading: {
-      google: false,
-      github: false,
-      facebook: false,
-      twitter: false,
-    },
-  };
   constructor(props) {
     super(props);
+    this.state = {
+      loading: {
+        google: false,
+        github: false,
+        facebook: false,
+        twitter: false,
+      },
+    };
+
     this.login = this.login.bind(this);
     this.loginWithGoogle = this.loginWithGoogle.bind(this);
     this.loginWithFacebook = this.loginWithFacebook.bind(this);
@@ -42,7 +43,7 @@ class login extends Component {
     return firebase.login({
       provider,
       type: 'popup',
-    })
+    });
   }
 
   loginWithGoogle() {
