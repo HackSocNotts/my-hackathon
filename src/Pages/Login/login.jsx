@@ -7,10 +7,10 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Icon from '@material-ui/core/Icon';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
-import MinimalContainer from '../../../Containers/Minimal';
-import { siteVars } from '../../../config';
+import MinimalContainer from '../../Containers/Minimal';
+import { siteVars } from '../../config';
 import styles from './styles';
-import logo from '../../../logo.svg';
+import logo from '../../logo.svg';
 
 class login extends Component {
   constructor(props) {
