@@ -57,6 +57,17 @@ class dashboardContainer extends Component {
               >
                 <MenuIcon />
               </IconButton>
+              <IconButton
+                color="inherit"
+                aria-label="Open drawer"
+                onClick={this.handleDrawerClose}
+                className={classNames(
+                  classes.menuButton,
+                  !open && classes.menuButtonHidden,
+                )}
+              >
+                <ChevronLeftIcon />
+              </IconButton>
               <Typography variant="title" color="inherit" noWrap className={classes.title}>
                 Dashboard
               </Typography>
@@ -74,11 +85,7 @@ class dashboardContainer extends Component {
             }}
             open={open}
           >
-            <div className={classes.toolbarIcon}>
-              <IconButton onClick={this.handleDrawerClose}>
-                <ChevronLeftIcon />
-              </IconButton>
-            </div>
+            <div className={classes.toolbarIcon} />
             <Divider />
             <Divider />
           </Drawer>
