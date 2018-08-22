@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -39,7 +38,6 @@ class dashboardContainer extends Component {
 
     return (
       <React.Fragment>
-        <CssBaseline />
         <div className={classes.root}>
           <AppBar
             position="absolute"
@@ -104,4 +102,4 @@ dashboardContainer.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default withStyles(styles)(dashboardContainer);
+export default withStyles(styles, { withTheme: true })(dashboardContainer);
