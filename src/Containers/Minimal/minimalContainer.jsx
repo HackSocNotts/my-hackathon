@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
 import styles from './styles';
@@ -11,7 +10,6 @@ class minimalContainer extends Component {
 
     return (
       <React.Fragment>
-        <CssBaseline />
         <main className={classes.layout}>
           <Paper className={classes.paper}>
             {children}
@@ -27,4 +25,4 @@ minimalContainer.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(minimalContainer);
+export default withStyles(styles, { withTheme: true })(minimalContainer);
