@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-import { Router, Route } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import history from './Store/history';
-import Login from './Pages/Login';
+import LoginPage from './Pages/Login';
+import HomePage from './Pages/Home';
 import './App.css';
 
 class App extends Component {
   render() {
     return (
       <Router history={history}>
-        <Route path="/login" component={Login} />
+        <Switch>
+          <Route path="/" component={HomePage} exact />
+          <Route path="/login" component={LoginPage} />
+        </Switch>
       </Router>
     );
   }
