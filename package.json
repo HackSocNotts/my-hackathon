@@ -15,6 +15,7 @@
   "dependencies": {
     "@material-ui/core": "^1.5.0",
     "@material-ui/icons": "^2.0.2",
+    "classnames": "^2.2.6",
     "fg-loadcss": "^2.0.1",
     "firebase": "^5.4.0",
     "history": "^4.7.2",
