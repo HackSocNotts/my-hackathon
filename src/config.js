@@ -13,7 +13,7 @@ const reduxFirebase = {
 };
 
 const siteVars = {
-  hackathonName: 'myHackathon',
+  hackathonName: process.env.REACT_APP_NAME,
 };
 
 export { firebase, reduxFirebase, siteVars };
