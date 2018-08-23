@@ -105,25 +105,25 @@ class dashboardContainer extends Component {
               </Typography>
             </div>
             <List>
-              <ListItem component={NavLink} to="/">
+              <ListItem component={NavLink} exact to="/" activeClassName={classes.activeListItem}>
                 <ListItemIcon>
                   <DashboardIcon color="primary" />
                 </ListItemIcon>
                 <ListItemText primary="Dashboard" />
               </ListItem>
-              <ListItem component={NavLink} to="/application">
+              <ListItem component={NavLink} to="/application" activeClassName={classes.activeListItem}>
                 <ListItemIcon>
                   <ApplicationIcon color="primary" />
                 </ListItemIcon>
                 <ListItemText primary="Application" />
               </ListItem>
-              <ListItem component={NavLink} to="/team">
+              <ListItem component={NavLink} to="/team" activeClassName={classes.activeListItem}>
                 <ListItemIcon>
                   <PeopleIcon color="primary" />
                 </ListItemIcon>
                 <ListItemText primary="Team" />
               </ListItem>
-              <ListItem component={NavLink} to="/team">
+              <ListItem component={NavLink} to="/team" activeClassName={classes.activeListItem}>
                 <ListItemIcon>
                   <SettingsIcon color="primary" />
                 </ListItemIcon>

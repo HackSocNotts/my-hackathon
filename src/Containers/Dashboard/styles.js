@@ -1,3 +1,5 @@
+import grey from '@material-ui/core/colors/grey';
+
 const drawerWidth = 240;
 const styles = theme => ({
   root: {
@@ -80,6 +82,9 @@ const styles = theme => ({
     display: 'block',
     marginLeft: 'auto',
     marginRight: 'auto',
+  },
+  activeListItem: {
+    background: grey[300],
   },
 });
 
