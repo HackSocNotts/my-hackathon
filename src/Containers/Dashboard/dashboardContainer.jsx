@@ -9,10 +9,20 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import ApplicationIcon from '@material-ui/icons/InsertDriveFile';
+import PeopleIcon from '@material-ui/icons/People';
+import SettingsIcon from '@material-ui/icons/Settings';
 import NotificationsMenu from '../../Components/notificationsMenu';
 import UserMenu from '../../Components/userMenu';
+import logo from '../../logo.svg';
 import styles from './styles';
+import { siteVars } from '../../config';
 
 class dashboardContainer extends Component {
   constructor(props) {
@@ -82,7 +92,43 @@ class dashboardContainer extends Component {
           >
             <div className={classes.toolbarIcon} />
             <Divider />
-            <Divider />
+            <div className={classNames(!open && classes.menuButtonHidden)}>
+              <img src={logo} className={classes.logo} alt="logo" />
+              <Typography
+                variant="title"
+                align="center"
+                color="primary"
+                gutterBottom
+              >
+                {siteVars.hackathonName}
+              </Typography>
+            </div>
+            <List>
+              <ListItem button>
+                <ListItemIcon>
+                  <DashboardIcon color="primary" />
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+              </ListItem>
+              <ListItem button>
+                <ListItemIcon>
+                  <ApplicationIcon color="primary" />
+                </ListItemIcon>
+                <ListItemText primary="Application" />
+              </ListItem>
+              <ListItem button>
+                <ListItemIcon>
+                  <PeopleIcon color="primary" />
+                </ListItemIcon>
+                <ListItemText primary="Team" />
+              </ListItem>
+              <ListItem button>
+                <ListItemIcon>
+                  <SettingsIcon color="primary" />
+                </ListItemIcon>
+                <ListItemText primary="Admin" />
+              </ListItem>
+            </List>
           </Drawer>
           <main className={classes.content}>
             <div className={classes.appBarSpacer} />
