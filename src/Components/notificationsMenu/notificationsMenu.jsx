@@ -74,9 +74,11 @@ class notificationsMenu extends Component {
           aria-haspopup="true"
           onClick={this.handleToggle}
         >
-          <Badge badgeContent={notifications.length} color="secondary">
-            <NotificationsIcon />
-          </Badge>
+          {notifications.length ? (
+            <Badge badgeContent={notifications.length} color="secondary">
+              <NotificationsIcon />
+            </Badge>
+          ) : (<NotificationsIcon />)}
         </IconButton>
         <Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
           {({ TransitionProps, placement }) => (
