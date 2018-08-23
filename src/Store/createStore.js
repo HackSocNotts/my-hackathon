@@ -3,7 +3,9 @@ import thunk from 'redux-thunk';
 import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
 import { reduxFirestore } from 'redux-firestore';
 import firebase from 'firebase/app';
+import { routerMiddleware, connectRouter } from 'connected-react-router';
 import makeRootReducer from './reducers';
+import history from './history';
 import { firebase as fbConfig, reduxFirebase as rrfConfig } from '../config';
 import { version } from '../../package.json';
 import 'firebase/auth';
@@ -23,6 +25,7 @@ export default (initialState = {}) => {
   // ======================================================
   const middleware = [
     thunk.withExtraArgument(getFirebase),
+    routerMiddleware(history),
     // This is where you add other middleware like redux-observable
   ];
 
@@ -45,7 +48,7 @@ export default (initialState = {}) => {
   // Store Instantiation and HMR Setup
   // ======================================================
   const store = createStore(
-    makeRootReducer(),
+    connectRouter(history)(makeRootReducer()),
     initialState,
     compose(
       applyMiddleware(...middleware),
