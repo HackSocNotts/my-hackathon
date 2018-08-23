@@ -11,6 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsMenu from '../../Components/notificationsMenu';
+import UserMenu from '../../Components/userMenu';
 import styles from './styles';
 
 class dashboardContainer extends Component {
@@ -69,6 +70,7 @@ class dashboardContainer extends Component {
                 Dashboard
               </Typography>
               <NotificationsMenu />
+              <UserMenu />
             </Toolbar>
           </AppBar>
           <Drawer
