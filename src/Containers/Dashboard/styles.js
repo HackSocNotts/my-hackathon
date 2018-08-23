@@ -75,6 +75,12 @@ const styles = theme => ({
   tableContainer: {
     height: 320,
   },
+  logo: {
+    width: '80%',
+    display: 'block',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
 });
 
 export default styles;
