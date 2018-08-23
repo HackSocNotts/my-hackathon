@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { NavLink } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -104,25 +105,25 @@ class dashboardContainer extends Component {
               </Typography>
             </div>
             <List>
-              <ListItem button>
+              <ListItem component={NavLink} to="/">
                 <ListItemIcon>
                   <DashboardIcon color="primary" />
                 </ListItemIcon>
                 <ListItemText primary="Dashboard" />
               </ListItem>
-              <ListItem button>
+              <ListItem component={NavLink} to="/application">
                 <ListItemIcon>
                   <ApplicationIcon color="primary" />
                 </ListItemIcon>
                 <ListItemText primary="Application" />
               </ListItem>
-              <ListItem button>
+              <ListItem component={NavLink} to="/team">
                 <ListItemIcon>
                   <PeopleIcon color="primary" />
                 </ListItemIcon>
                 <ListItemText primary="Team" />
               </ListItem>
-              <ListItem button>
+              <ListItem component={NavLink} to="/team">
                 <ListItemIcon>
                   <SettingsIcon color="primary" />
                 </ListItemIcon>
