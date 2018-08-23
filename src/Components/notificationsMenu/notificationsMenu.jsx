@@ -87,7 +87,7 @@ class notificationsMenu extends Component {
             >
               <Paper>
                 <ClickAwayListener onClickAway={this.handleClose}>
-                  <MenuList>
+                  <MenuList className={classes.notification}>
                     {notifications.map(notification => (
                       <ListItem
                         button
