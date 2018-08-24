@@ -40,37 +40,35 @@ class login extends Component {
 
   login(provider) {
     const { firebase } = this.props;
+    const { router } = this.context;
     return firebase.login({
       provider,
       type: 'popup',
-    });
+    })
+      .then(() => router.history.push('/'));
   }
 
   loginWithGoogle() {
     this.setState({ loading: { google: true } });
     this.login('google')
-      .then(() => this.setState({ loading: { google: false } }))
       .catch(() => this.setState({ loading: { google: false } }));
   }
 
   loginWithFacebook() {
     this.setState({ loading: { facebook: true } });
     this.login('facebook')
-      .then(() => this.setState({ loading: { facebook: false } }))
       .catch(() => this.setState({ loading: { facebook: false } }));
   }
 
   loginWithTwitter() {
     this.setState({ loading: { twitter: true } });
     this.login('twitter')
-      .then(() => this.setState({ loading: { twitter: false } }))
       .catch(() => this.setState({ loading: { twitter: false } }));
   }
 
   loginWithGitHub() {
     this.setState({ loading: { github: true } });
     this.login('github')
-      .then(() => this.setState({ loading: { github: false } }))
       .catch(() => this.setState({ loading: { github: false } }));
   }
 
@@ -148,6 +146,10 @@ class login extends Component {
 login.propTypes = {
   firebase: PropTypes.any.isRequired,
   classes: PropTypes.object.isRequired,
+};
+
+login.contextTypes = {
+  router: PropTypes.object.isRequired,
 };
 
 export default firebaseConnect()(withStyles(styles)(login));
