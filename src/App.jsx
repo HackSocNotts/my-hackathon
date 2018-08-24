@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import history from './Store/history';
+import RequireAuth from './Components/requireAuth';
 import LoginPage from './Pages/Login';
 import HomePage from './Pages/Home';
 import TeamPage from './Pages/Team';
@@ -19,10 +20,10 @@ class App extends Component {
         <CssBaseline />
         <ConnectedRouter history={history}>
           <Switch>
-            <Route path="/" component={HomePage} exact />
-            <Route path="/application" component={ApplicationPage} />
-            <Route path="/team" component={TeamPage} />
-            <Route path="/admin" component={AdminPage} />
+            <Route path="/" component={RequireAuth(HomePage)} exact />
+            <Route path="/application" component={RequireAuth(ApplicationPage)} />
+            <Route path="/team" component={RequireAuth(TeamPage)} />
+            <Route path="/admin" component={RequireAuth(AdminPage)} />
             <Route path="/login" component={LoginPage} />
           </Switch>
         </ConnectedRouter>
