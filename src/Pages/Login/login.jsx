@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -8,6 +9,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Icon from '@material-ui/core/Icon';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import MinimalContainer from '../../Containers/Minimal';
+import { createAndShowFlash } from '../../Modules/Flash';
 import { siteVars } from '../../config';
 import styles from './styles';
 import logo from '../../logo.svg';
@@ -29,6 +31,7 @@ class login extends Component {
     this.loginWithFacebook = this.loginWithFacebook.bind(this);
     this.loginWithGitHub = this.loginWithGitHub.bind(this);
     this.loginWithTwitter = this.loginWithTwitter.bind(this);
+    this.showLoginError = this.showLoginError.bind(this);
   }
 
   componentDidMount() {
@@ -51,25 +54,42 @@ class login extends Component {
   loginWithGoogle() {
     this.setState({ loading: { google: true } });
     this.login('google')
-      .catch(() => this.setState({ loading: { google: false } }));
+      .catch((err) => {
+        this.setState({ loading: { google: false } });
+        this.showLoginError(err.message);
+      });
   }
 
   loginWithFacebook() {
     this.setState({ loading: { facebook: true } });
     this.login('facebook')
-      .catch(() => this.setState({ loading: { facebook: false } }));
+      .catch((err) => {
+        this.setState({ loading: { facebook: false } });
+        this.showLoginError(err.message);
+      });
   }
 
   loginWithTwitter() {
     this.setState({ loading: { twitter: true } });
     this.login('twitter')
-      .catch(() => this.setState({ loading: { twitter: false } }));
+      .catch((err) => {
+        this.setState({ loading: { twitter: false } });
+        this.showLoginError(err.message);
+      });
   }
 
   loginWithGitHub() {
     this.setState({ loading: { github: true } });
     this.login('github')
-      .catch(() => this.setState({ loading: { github: false } }));
+      .catch((err) => {
+        this.setState({ loading: { github: false } });
+        this.showLoginError(err.message);
+      });
+  }
+
+  showLoginError(message) {
+    const { flash } = this.props;
+    flash('danger', 'Login Error Occured', message);
   }
 
   render() {
@@ -146,10 +166,20 @@ class login extends Component {
 login.propTypes = {
   firebase: PropTypes.any.isRequired,
   classes: PropTypes.object.isRequired,
+  flash: PropTypes.func.isRequired,
 };
 
 login.contextTypes = {
   router: PropTypes.object.isRequired,
 };
 
-export default firebaseConnect()(withStyles(styles)(login));
+// eslint-disable-next-line
+const mapStateToProps = state => ({ });
+
+const mapDispatchToProps = dispatch => ({
+  flash: (type, title, message) => dispatch(createAndShowFlash(type, title, message)),
+});
+
+export default firebaseConnect()(withStyles(styles)(
+  connect(mapStateToProps, mapDispatchToProps)(login),
+));
