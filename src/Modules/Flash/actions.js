@@ -1,13 +1,11 @@
 import { WAIT_FOR_ACTION } from 'redux-wait-for-action';
-
-import history from '../../Store/history';
 /**
  * Flash Action Types
  */
 
 export const CREATE_FLASH = 'CREATE_FLASH';
 export const SHOW_FLASH = 'SHOW_FLASH';
-export const CLEAR_FLASH = '';
+export const CLEAR_FLASH = 'CLEAR_FLASH';
 export const CREATE_AND_SHOW_FLASH = 'CREATE_AND_SHOW_FLASH';
 
 /**
