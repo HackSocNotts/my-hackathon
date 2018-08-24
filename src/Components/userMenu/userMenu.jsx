@@ -21,6 +21,7 @@ class userMenu extends Component {
 
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleAccount = this.handleAccount.bind(this);
     this.logout = this.logout.bind(this);
   }
 
@@ -36,13 +37,17 @@ class userMenu extends Component {
     this.setState({ open: false });
   }
 
+  handleAccount() {
+    const { router } = this.context;
+    router.history.push('/account');
+  }
+
   logout() {
     const { firebase } = this.props;
     firebase.logout();
   }
 
   render() {
-    const { classes } = this.props;
     const { open } = this.state;
 
     return (
@@ -68,8 +73,7 @@ class userMenu extends Component {
               <Paper>
                 <ClickAwayListener onClickAway={this.handleClose}>
                   <MenuList>
-                    <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                    <MenuItem onClick={this.handleAccount}>My account</MenuItem>
                     <MenuItem onClick={this.logout}>Logout</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
@@ -85,6 +89,10 @@ class userMenu extends Component {
 userMenu.propTypes = {
   firebase: PropTypes.any.isRequired,
   classes: PropTypes.object.isRequired,
+};
+
+userMenu.contextTypes = {
+  router: PropTypes.object.isRequired,
 };
 
 export default firebaseConnect()(withStyles(styles, { withTheme: true })(userMenu));
