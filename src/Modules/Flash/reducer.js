@@ -1,5 +1,10 @@
 import initalState from './initialState';
-import { CREATE_FLASH, CREATE_AND_SHOW_FLASH, SHOW_FLASH } from './actions';
+import {
+  CREATE_FLASH,
+  CREATE_AND_SHOW_FLASH,
+  SHOW_FLASH,
+  CLEAR_FLASH,
+} from './actions';
 
 const reducer = (state = initalState, action) => {
   switch (action.type) {
@@ -9,6 +14,7 @@ const reducer = (state = initalState, action) => {
         return {
           ...state,
           active: false,
+          show: true,
           title,
           message,
           type,
@@ -32,6 +38,16 @@ const reducer = (state = initalState, action) => {
           type,
         };
       })();
+
+    case CLEAR_FLASH:
+      return {
+        ...state,
+        active: false,
+        show: false,
+        title: '',
+        message: '',
+        type: '',
+      };
 
     default:
       return state;
