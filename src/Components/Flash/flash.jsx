@@ -8,7 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
-import * as styles from './styles';
+import styles from './styles';
 import { clearFlash } from '../../Modules/Flash';
 
 class flash extends Component {
@@ -58,25 +58,30 @@ class flash extends Component {
       type,
     } = this.state;
 
-    const { classes } = this.props;
+    const { classes, cardProps } = this.props;
 
     let cardClass;
+    let iconClass;
 
     switch (type) {
       case 'info':
         cardClass = classes.infoInverted;
+        iconClass = classes.infoInvertedIcon;
         break;
 
       case 'success':
         cardClass = classes.successInverted;
+        iconClass = classes.successInvertedIcon;
         break;
 
       case 'warn':
         cardClass = classes.warnInverted;
+        iconClass = classes.warnInvertedIcon;
         break;
 
       case 'danger':
         cardClass = classes.dangerInverted;
+        iconClass = classes.dangerInvertedIcon;
         break;
 
       default:
@@ -85,11 +90,12 @@ class flash extends Component {
 
     if (active) {
       return (
-        <Card className={cardClass}>
+        <Card classes={{ root: cardClass }} {...cardProps}>
           <CardHeader
+            classes={{ title: cardClass }}
             action={(
               <IconButton onClick={this.handleClose}>
-                <CloseIcon />
+                <CloseIcon classes={{ root: iconClass }} />
               </IconButton>
             )}
             title={title}
@@ -137,6 +143,6 @@ const mapDispatchToProps = dispatch => ({
   clear: () => dispatch(clearFlash()),
 });
 
-export default withStyles(styles, { withTheme: true })(
+export default withStyles(styles)(
   connect(mapStateToProps, mapDispatchToProps)(flash),
 );
