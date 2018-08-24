@@ -4,6 +4,7 @@ import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
 import { reduxFirestore } from 'redux-firestore';
 import firebase from 'firebase/app';
 import { routerMiddleware, connectRouter } from 'connected-react-router';
+import createReduxWaitForMiddleware from 'redux-wait-for-action';
 import makeRootReducer from './reducers';
 import history from './history';
 import { firebase as fbConfig, reduxFirebase as rrfConfig } from '../config';
@@ -26,6 +27,7 @@ export default (initialState = {}) => {
   const middleware = [
     thunk.withExtraArgument(getFirebase),
     routerMiddleware(history),
+    createReduxWaitForMiddleware(),
     // This is where you add other middleware like redux-observable
   ];
 
