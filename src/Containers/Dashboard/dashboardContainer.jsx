@@ -113,7 +113,7 @@ class dashboardContainer extends Component {
                 </ListItemIcon>
                 <ListItemText primary="Team" />
               </ListItem>
-              <ListItem component={NavLink} to="/team" activeClassName={classes.activeListItem}>
+              <ListItem component={NavLink} to="/admin" activeClassName={classes.activeListItem}>
                 <ListItemIcon>
                   <SettingsIcon color="primary" />
                 </ListItemIcon>
