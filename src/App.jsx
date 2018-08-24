@@ -10,6 +10,7 @@ import HomePage from './Pages/Home';
 import TeamPage from './Pages/Team';
 import AdminPage from './Pages/Admin';
 import ApplicationPage from './Pages/Application';
+import AccountPage from './Pages/Account';
 import theme from './theme';
 import './App.css';
 
@@ -24,6 +25,7 @@ class App extends Component {
             <Route path="/application" component={RequireAuth(ApplicationPage)} />
             <Route path="/team" component={RequireAuth(TeamPage)} />
             <Route path="/admin" component={RequireAuth(AdminPage)} />
+            <Route path="/account" component={RequireAuth(AccountPage)} />
             <Route path="/login" component={LoginPage} />
           </Switch>
         </ConnectedRouter>
