@@ -20,6 +20,7 @@ import ApplicationIcon from '@material-ui/icons/InsertDriveFile';
 import PeopleIcon from '@material-ui/icons/People';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { connect } from 'react-redux';
+import { BrowserView } from 'react-device-detect';
 import NotificationsMenu from '../../Components/notificationsMenu';
 import UserMenu from '../../Components/userMenu';
 import logo from '../../logo.svg';
@@ -45,28 +46,30 @@ class dashboardContainer extends Component {
             className={classNames(classes.appBar, open && classes.appBarShift)}
           >
             <Toolbar disableGutters={open} className={classes.toolbar}>
-              <IconButton
-                color="inherit"
-                aria-label="Open drawer"
-                onClick={handleDrawerOpen}
-                className={classNames(
-                  classes.menuButton,
-                  open && classes.menuButtonHidden,
-                )}
-              >
-                <MenuIcon />
-              </IconButton>
-              <IconButton
-                color="inherit"
-                aria-label="Open drawer"
-                onClick={handleDrawerClose}
-                className={classNames(
-                  classes.menuButton,
-                  !open && classes.menuButtonHidden,
-                )}
-              >
-                <ChevronLeftIcon />
-              </IconButton>
+              <BrowserView>
+                <IconButton
+                  color="inherit"
+                  aria-label="Open drawer"
+                  onClick={handleDrawerOpen}
+                  className={classNames(
+                    classes.menuButton,
+                    open && classes.menuButtonHidden,
+                  )}
+                >
+                  <MenuIcon />
+                </IconButton>
+                <IconButton
+                  color="inherit"
+                  aria-label="Open drawer"
+                  onClick={handleDrawerClose}
+                  className={classNames(
+                    classes.menuButton,
+                    !open && classes.menuButtonHidden,
+                  )}
+                >
+                  <ChevronLeftIcon />
+                </IconButton>
+              </BrowserView>
               <Typography variant="title" color="inherit" noWrap className={classes.title}>
                 Dashboard
               </Typography>
