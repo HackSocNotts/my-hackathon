@@ -6,6 +6,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import history from './Store/history';
 import LoginPage from './Pages/Login';
 import HomePage from './Pages/Home';
+import TeamPage from './Pages/Team';
+import AdminPage from './Pages/Admin';
 import ApplicationPage from './Pages/Application';
 import theme from './theme';
 import './App.css';
@@ -19,6 +21,8 @@ class App extends Component {
           <Switch>
             <Route path="/" component={HomePage} exact />
             <Route path="/application" component={ApplicationPage} />
+            <Route path="/team" component={TeamPage} />
+            <Route path="/admin" component={AdminPage} />
             <Route path="/login" component={LoginPage} />
           </Switch>
         </ConnectedRouter>
