@@ -19,33 +19,23 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import ApplicationIcon from '@material-ui/icons/InsertDriveFile';
 import PeopleIcon from '@material-ui/icons/People';
 import SettingsIcon from '@material-ui/icons/Settings';
+import { connect } from 'react-redux';
 import NotificationsMenu from '../../Components/notificationsMenu';
 import UserMenu from '../../Components/userMenu';
 import logo from '../../logo.svg';
 import styles from './styles';
 import { siteVars } from '../../config';
+import { openNavigationDrawer, closeNavigationDrawer } from '../../Modules/Navigation';
 
 class dashboardContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      open: true,
-    };
-    this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
-    this.handleDrawerClose = this.handleDrawerClose.bind(this);
-  }
-
-  handleDrawerOpen() {
-    this.setState({ open: true });
-  }
-
-  handleDrawerClose() {
-    this.setState({ open: false });
-  }
-
   render() {
-    const { classes, children } = this.props;
-    const { open } = this.state;
+    const {
+      classes,
+      children,
+      open,
+      handleDrawerClose,
+      handleDrawerOpen,
+    } = this.props;
 
     return (
       <React.Fragment>
@@ -58,7 +48,7 @@ class dashboardContainer extends Component {
               <IconButton
                 color="inherit"
                 aria-label="Open drawer"
-                onClick={this.handleDrawerOpen}
+                onClick={handleDrawerOpen}
                 className={classNames(
                   classes.menuButton,
                   open && classes.menuButtonHidden,
@@ -69,7 +59,7 @@ class dashboardContainer extends Component {
               <IconButton
                 color="inherit"
                 aria-label="Open drawer"
-                onClick={this.handleDrawerClose}
+                onClick={handleDrawerClose}
                 className={classNames(
                   classes.menuButton,
                   !open && classes.menuButtonHidden,
@@ -144,6 +134,21 @@ class dashboardContainer extends Component {
 dashboardContainer.propTypes = {
   classes: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,
+  open: PropTypes.bool.isRequired,
+  handleDrawerOpen: PropTypes.func.isRequired,
+  handleDrawerClose: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(dashboardContainer);
+const mapStateToProps = state => ({
+  open: state.navigation.drawer.open,
+});
+
+const mapDispatchToProps = dispatch => ({
+  handleDrawerOpen: () => dispatch(openNavigationDrawer()),
+  handleDrawerClose: () => dispatch(closeNavigationDrawer()),
+});
+
+
+export default withStyles(styles, { withTheme: true })(
+  connect(mapStateToProps, mapDispatchToProps)(dashboardContainer),
+);
