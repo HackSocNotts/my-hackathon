@@ -3,6 +3,7 @@ import { firebaseReducer as firebase } from 'react-redux-firebase';
 import { firestoreReducer as firestore } from 'redux-firestore';
 import { reducer as form } from 'redux-form';
 import navigation from '../Modules/Navigation';
+import flash from '../Modules/Flash';
 
 const makeRootReducer = asyncReducers => combineReducers({
   // Add sync reducers here
@@ -10,6 +11,7 @@ const makeRootReducer = asyncReducers => combineReducers({
   firestore,
   form,
   navigation,
+  flash,
   ...asyncReducers,
 });
 
