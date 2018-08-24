@@ -97,7 +97,7 @@ class login extends Component {
           >
             <Icon className="fab fa-github" />
           </Button>
-          {loading.github && <CircularProgress size={24} className={[classes.buttonProgress, classes.githubProgress].join(' ')} />}
+          {loading.github && <CircularProgress size={24} thickness={8} className={[classes.buttonProgress, classes.githubProgress].join(' ')} />}
         </div>
         <div className={classes.wrapper}>
           <Button
@@ -110,7 +110,7 @@ class login extends Component {
           >
             <Icon className="fab fa-twitter" />
           </Button>
-          {loading.twitter && <CircularProgress size={24} className={[classes.buttonProgress, classes.twitterProgress].join(' ')} />}
+          {loading.twitter && <CircularProgress size={24} thickness={8} className={[classes.buttonProgress, classes.twitterProgress].join(' ')} />}
         </div>
         <div className={classes.wrapper}>
           <Button
@@ -123,7 +123,7 @@ class login extends Component {
           >
             <Icon className="fab fa-google" />
           </Button>
-          {loading.google && <CircularProgress size={24} className={[classes.buttonProgress, classes.googleProgress].join(' ')} />}
+          {loading.google && <CircularProgress size={24} thickness={8} className={[classes.buttonProgress, classes.googleProgress].join(' ')} />}
         </div>
         <div className={classes.wrapper}>
           <Button
@@ -136,7 +136,7 @@ class login extends Component {
           >
             <Icon className="fab fa-facebook" />
           </Button>
-          {loading.facebook && <CircularProgress size={24} className={[classes.buttonProgress, classes.facebookProgress].join(' ')} />}
+          {loading.facebook && <CircularProgress size={24} thickness={8} className={[classes.buttonProgress, classes.facebookProgress].join(' ')} />}
         </div>
       </MinimalContainer>
     );
