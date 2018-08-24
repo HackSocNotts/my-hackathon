@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { firebaseConnect } from 'react-redux-firebase';
 import withStyles from '@material-ui/core/styles/withStyles';
 import IconButton from '@material-ui/core/IconButton';
 import MenuList from '@material-ui/core/MenuList';
@@ -20,6 +21,7 @@ class userMenu extends Component {
 
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   handleToggle() {
@@ -32,6 +34,11 @@ class userMenu extends Component {
     }
 
     this.setState({ open: false });
+  }
+
+  logout() {
+    const { firebase } = this.props;
+    firebase.logout();
   }
 
   render() {
@@ -63,7 +70,7 @@ class userMenu extends Component {
                   <MenuList>
                     <MenuItem onClick={this.handleClose}>Profile</MenuItem>
                     <MenuItem onClick={this.handleClose}>My account</MenuItem>
-                    <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+                    <MenuItem onClick={this.logout}>Logout</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
@@ -76,7 +83,8 @@ class userMenu extends Component {
 }
 
 userMenu.propTypes = {
+  firebase: PropTypes.any.isRequired,
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(userMenu);
+export default firebaseConnect()(withStyles(styles, { withTheme: true })(userMenu));
