@@ -59,7 +59,7 @@ class flash extends Component {
       type,
     } = this.state;
 
-    const { classes, cardProps } = this.props;
+    const { classes, cardProps, children } = this.props;
 
     let cardClass;
     let iconClass;
@@ -93,20 +93,23 @@ class flash extends Component {
 
     if (active) {
       return (
-        <Card classes={{ root: classNames(cardClass, classes.card) }} {...cardProps}>
-          <CardHeader
-            classes={{ title: cardClass }}
-            action={(
-              <IconButton onClick={this.handleClose}>
-                <CloseIcon classes={{ root: iconClass }} />
-              </IconButton>
-            )}
-            title={title}
-          />
-          <CardContent>
-            {message}
-          </CardContent>
-        </Card>
+        <React.Fragment>
+          <Card classes={{ root: classNames(cardClass, classes.card) }} {...cardProps}>
+            <CardHeader
+              classes={{ title: cardClass }}
+              action={(
+                <IconButton onClick={this.handleClose}>
+                  <CloseIcon classes={{ root: iconClass }} />
+                </IconButton>
+              )}
+              title={title}
+            />
+            <CardContent>
+              {message}
+            </CardContent>
+          </Card>
+          {children}
+        </React.Fragment>
       );
     }
     return (
@@ -117,13 +120,18 @@ class flash extends Component {
 
 flash.propTypes = {
   classes: PropTypes.object.isRequired,
+  children: PropTypes.node,
   /* eslint-disable react/no-unused-prop-types */
   clear: PropTypes.func.isRequired,
   active: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
-  message: PropTypes.string.isRequired,
+  message: PropTypes.node.isRequired,
   type: PropTypes.oneOf(['info', 'success', 'warn', 'danger', '']).isRequired,
   /* eslint-enable */
+};
+
+flash.defaultProps = {
+  children: <React.Fragment />,
 };
 
 const mapStateToProps = (state) => {
