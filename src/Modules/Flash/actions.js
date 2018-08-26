@@ -27,10 +27,6 @@ export function createFlash(type, title, message) {
         title,
         message,
       },
-      /**
-       * @TODO figure out how to prevent this from binding
-       * multiple times when flash is created on init
-       */
       [WAIT_FOR_ACTION]: '@@router/LOCATION_CHANGE',
     })
       .then(() => dispatch(showFlash()))
