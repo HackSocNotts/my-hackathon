@@ -27,6 +27,7 @@ import logo from '../../logo.svg';
 import styles from './styles';
 import { siteVars } from '../../config';
 import { openNavigationDrawer, closeNavigationDrawer } from '../../Modules/Navigation';
+import Flash from '../../Components/Flash';
 
 class dashboardContainer extends Component {
   render() {
@@ -126,6 +127,9 @@ class dashboardContainer extends Component {
           </Drawer>
           <main className={classes.content}>
             <div className={classes.appBarSpacer} />
+            <Flash cardProps={{ elevation: 0, style: { marginTop: 24 } }}>
+              <div className={classes.appBarSpacer} />
+            </Flash>
             {children}
           </main>
         </div>
