@@ -18,7 +18,7 @@
     "classnames": "^2.2.6",
     "connected-react-router": "^4.4.1",
     "fg-loadcss": "^2.0.1",
-    "firebase": "^5.4.0",
+    "firebase": "^5.4.1",
     "history": "^4.7.2",
     "material-dashboard-react": "^1.4.1",
     "prop-types": "^15.6.2",
