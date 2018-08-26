@@ -7,6 +7,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import classNames from 'classnames';
 
 import styles from './styles';
 import { clearFlash } from '../../Modules/Flash';
@@ -85,12 +86,14 @@ class flash extends Component {
         break;
 
       default:
+        cardClass = classes.infoInverted;
+        iconClass = classes.infoInvertedIcon;
         break;
     }
 
     if (active) {
       return (
-        <Card classes={{ root: cardClass }} {...cardProps}>
+        <Card classes={{ root: classNames(cardClass, classes.card) }} {...cardProps}>
           <CardHeader
             classes={{ title: cardClass }}
             action={(

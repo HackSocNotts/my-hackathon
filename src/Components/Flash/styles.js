@@ -4,6 +4,10 @@ import amber from '@material-ui/core/colors/amber';
 import blue from '@material-ui/core/colors/blue';
 
 const styles = theme => ({
+  card: {
+    width: '100%',
+    minHeight: 40,
+  },
   info: {
     color: blue[500],
   },
