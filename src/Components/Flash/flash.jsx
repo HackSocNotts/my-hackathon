@@ -33,7 +33,7 @@ class flash extends Component {
       clear,
     } = props;
 
-    if (active) {
+    if (active && title) {
       clear();
       return {
         active,
