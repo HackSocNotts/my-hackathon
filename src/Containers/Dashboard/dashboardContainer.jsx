@@ -14,6 +14,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ApplicationIcon from '@material-ui/icons/InsertDriveFile';
@@ -37,6 +38,7 @@ class dashboardContainer extends Component {
       open,
       handleDrawerClose,
       handleDrawerOpen,
+      isLoading,
     } = this.props;
 
     return (
@@ -77,6 +79,7 @@ class dashboardContainer extends Component {
               <NotificationsMenu />
               <UserMenu />
             </Toolbar>
+            { isLoading ? <LinearProgress color="secondary" /> : <React.Fragment /> }
           </AppBar>
           <Drawer
             variant="permanent"
@@ -130,7 +133,7 @@ class dashboardContainer extends Component {
             <Flash cardProps={{ elevation: 0, style: { marginTop: 24 } }}>
               <div className={classes.appBarSpacer} />
             </Flash>
-            {children}
+            {isLoading ? <React.Fragment /> : children}
           </main>
         </div>
       </React.Fragment>
@@ -144,6 +147,11 @@ dashboardContainer.propTypes = {
   open: PropTypes.bool.isRequired,
   handleDrawerOpen: PropTypes.func.isRequired,
   handleDrawerClose: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
+};
+
+dashboardContainer.defaultProps = {
+  isLoading: false,
 };
 
 const mapStateToProps = state => ({
