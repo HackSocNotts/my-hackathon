@@ -21,11 +21,11 @@ class App extends Component {
         <CssBaseline />
         <ConnectedRouter history={history}>
           <Switch>
-            <Route path="/" component={RequireAuth(HomePage)} exact />
-            <Route path="/application" component={RequireAuth(ApplicationPage)} />
-            <Route path="/team" component={RequireAuth(TeamPage)} />
-            <Route path="/admin" component={RequireAuth(AdminPage)} />
-            <Route path="/account" component={RequireAuth(AccountPage)} />
+            <Route path="/" component={RequireAuth(true, false)(HomePage)} exact />
+            <Route path="/application" component={RequireAuth(true)(ApplicationPage)} />
+            <Route path="/team" component={RequireAuth(true)(TeamPage)} />
+            <Route path="/admin" component={RequireAuth(true)(AdminPage)} />
+            <Route path="/account" component={RequireAuth()(AccountPage)} />
             <Route path="/login" component={LoginPage} />
           </Switch>
         </ConnectedRouter>
