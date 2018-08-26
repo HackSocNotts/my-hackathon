@@ -39,6 +39,7 @@ class dashboardContainer extends Component {
       handleDrawerClose,
       handleDrawerOpen,
       isLoading,
+      pageTitle,
     } = this.props;
 
     return (
@@ -74,7 +75,7 @@ class dashboardContainer extends Component {
                 </IconButton>
               </BrowserView>
               <Typography variant="title" color="inherit" noWrap className={classes.title}>
-                Dashboard
+                {pageTitle}
               </Typography>
               <NotificationsMenu />
               <UserMenu />
@@ -148,10 +149,12 @@ dashboardContainer.propTypes = {
   handleDrawerOpen: PropTypes.func.isRequired,
   handleDrawerClose: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
+  pageTitle: PropTypes.string,
 };
 
 dashboardContainer.defaultProps = {
   isLoading: false,
+  pageTitle: siteVars.hackathonName,
 };
 
 const mapStateToProps = state => ({
