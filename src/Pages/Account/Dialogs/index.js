@@ -1,3 +1,4 @@
 import ChangeEmail from './changeEmail';
+import ChangeName from './changeName';
 
-export { ChangeEmail };
+export { ChangeEmail, ChangeName };
