@@ -11,18 +11,16 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 
 import DashboardContainer from '../../Containers/Dashboard';
 import { createAndShowFlash } from '../../Modules/Flash';
-import { ChangeEmail } from './Dialogs';
+import { ChangeEmail, ChangeName } from './Dialogs';
 
 import styles from './styles';
 
 class account extends Component {
   state = {
     showVerificationButton: true,
-    changeEmailOpen: false,
   };
 
   constructor(props) {
@@ -54,51 +52,42 @@ class account extends Component {
     }
   }
 
-  handleChangeEmailButton() {
-    this.setState({ changeEmailOpen: true });
-  }
-
   /**
    * Changes the users email after submitting the changeEmail dialogue
    * @param {string} email email to change to
    */
   handleChangeEmailSubmit(email) {
     const { firebase, flash, profile } = this.props;
-    // Close changeEmailDialogue
-    this.setState({ changeEmailOpen: false });
-    // CHeck if an email has been sent or the dialogue has just been cancled
-    if (email !== null) {
-      // Call updateEmail
-      firebase.updateEmail(email)
-        // Check for any errors
-        .catch((err) => {
-          // Too-old auth gets special handling
-          if (err.code === 'auth/requires-recent-login') {
-            // Notify User
-            flash('warn', 'Login Verification Required', 'Please use the popup to login again.');
-            // Trigger reauth sequence
-            return this.reauth(profile.providerData[0].providerId)
-              // Try updating email again
-              .then(() => firebase.updateEmail(email));
-          }
-          // All other errors get rejected and sent to the next catch
-          return Promise.reject(err);
-        })
-        // Send verification email to new email
-        .then(() => firebase.auth().currentUser.sendEmailVerification())
-        // Notify user that email was updated sucesffully
-        .then(() => flash('success', 'Email Changed Succesfully', 'Check your email for the verification link.'))
-        // Breaking error provides user with error output to provide to an admin
-        .catch(err => flash('danger', 'Email Verification Failed to Send', (
-          <p>
-            Share the following error output with an administrator:
-            <br />
-            {err.message}
-          </p>
-        )))
-        // Always reload auth
-        .finally(() => firebase.reloadAuth());
-    }
+    // Call updateEmail
+    firebase.updateEmail(email)
+      // Check for any errors
+      .catch((err) => {
+        // Too-old auth gets special handling
+        if (err.code === 'auth/requires-recent-login') {
+          // Notify User
+          flash('warn', 'Login Verification Required', 'Please use the popup to login again.');
+          // Trigger reauth sequence
+          return this.reauth(profile.providerData[0].providerId)
+            // Try updating email again
+            .then(() => firebase.updateEmail(email));
+        }
+        // All other errors get rejected and sent to the next catch
+        return Promise.reject(err);
+      })
+      // Send verification email to new email
+      .then(() => firebase.auth().currentUser.sendEmailVerification())
+      // Notify user that email was updated sucesffully
+      .then(() => flash('success', 'Email Changed Succesfully', 'Check your email for the verification link.'))
+      // Breaking error provides user with error output to provide to an admin
+      .catch(err => flash('danger', 'Email Verification Failed to Send', (
+        <p>
+          Share the following error output with an administrator:
+          <br />
+          {err.message}
+        </p>
+      )))
+      // Always reload auth
+      .finally(() => firebase.reloadAuth());
   }
 
   reauth(providerId) {
@@ -131,7 +120,7 @@ class account extends Component {
 
   render() {
     const { profile, auth, classes } = this.props;
-    const { showVerificationButton, changeEmailOpen } = this.state;
+    const { showVerificationButton } = this.state;
     return (
       <DashboardContainer isLoading={(!profile.isLoaded || !auth.isLoaded)} pageTitle="Account Settings">
         <Typography variant="title" gutterBottom>
@@ -164,15 +153,16 @@ class account extends Component {
             )}
           </FormControl>
           <div className={classes.buttonRow}>
-            <Button type="button" onClick={this.handleChangeEmailButton} className={classes.buttonRowButton}>
-              Change Email
-            </Button>
-            <Button type="button" onClick={this.handleChangeEmailButton} className={classes.buttonRowButton}>
-              Change Name
-            </Button>
+            <ChangeEmail
+              submitFunction={this.handleChangeEmailSubmit}
+              buttonProps={{ className: classes.buttonRowButton }}
+            />
+            <ChangeName
+              submitFunction={this.handleChangeEmailSubmit}
+              buttonProps={{ className: classes.buttonRowButton }}
+            />
           </div>
         </div>
-        <ChangeEmail open={changeEmailOpen} submitFunction={this.handleChangeEmailSubmit} />
       </DashboardContainer>
     );
   }

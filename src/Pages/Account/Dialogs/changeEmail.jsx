@@ -13,67 +13,80 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 class changeEmail extends Component {
   state = {
     email: '',
+    open: false,
   };
 
   constructor(props) {
     super(props);
+    this.open = this.open.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
 
   handleChange = event => this.setState({ email: event.target.value });
 
+  open = () => this.setState({ open: true });
+
   handleClose = action => () => {
     const { submitFunction } = this.props;
     const { email } = this.state;
 
+    this.setState({ open: false });
+
     if (action === 'save') {
       submitFunction(email);
-    } else {
-      submitFunction(null);
     }
   }
 
   render() {
-    const { open } = this.props;
-    const { email } = this.state;
+    const { buttonProps } = this.props;
+    const { email, open } = this.state;
     return (
-      <Dialog
-        open={open}
-        onClose={this.handleClose('close')}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">Change Email</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Please specify the new email address you&apos;d like to use.
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-            defaultValue={email}
-            onChange={this.handleChange}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={this.handleClose('cancel')} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={this.handleClose('save')} color="primary">
-            Change
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <React.Fragment>
+        <Button type="button" onClick={this.open} {...buttonProps}>
+          Change Email
+        </Button>
+        <Dialog
+          open={open}
+          onClose={this.handleClose('close')}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="form-dialog-title">Change Email</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Please specify the new email address you&apos;d like to use.
+            </DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Email Address"
+              type="email"
+              fullWidth
+              defaultValue={email}
+              onChange={this.handleChange}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose('cancel')} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={this.handleClose('save')} color="primary">
+              Change
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </React.Fragment>
     );
   }
 }
 
 changeEmail.propTypes = {
-  open: PropTypes.bool.isRequired,
+  buttonProps: PropTypes.object,
   submitFunction: PropTypes.func.isRequired,
+};
+
+changeEmail.defaultProps = {
+  buttonProps: {},
 };
 
 export default changeEmail;
