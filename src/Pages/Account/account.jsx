@@ -26,8 +26,8 @@ class account extends Component {
   constructor(props) {
     super(props);
     this.resendEmailVerification = this.resendEmailVerification.bind(this);
-    this.handleChangeEmailButton = this.handleChangeEmailButton.bind(this);
     this.handleChangeEmailSubmit = this.handleChangeEmailSubmit.bind(this);
+    this.handleChangeNameSubmit = this.handleChangeNameSubmit.bind(this);
     this.reauth = this.reauth.bind(this);
   }
 
@@ -80,6 +80,30 @@ class account extends Component {
       .then(() => flash('success', 'Email Changed Succesfully', 'Check your email for the verification link.'))
       // Breaking error provides user with error output to provide to an admin
       .catch(err => flash('danger', 'Email Verification Failed to Send', (
+        <p>
+          Share the following error output with an administrator:
+          <br />
+          {err.message}
+        </p>
+      )))
+      // Always reload auth
+      .finally(() => firebase.reloadAuth());
+  }
+
+  /**
+   * Changes the users name in firebase auth and firestore
+   * @param {string} name the name to change to
+   */
+  handleChangeNameSubmit(name) {
+    const { firebase, flash } = this.props;
+    // Update firebase auth profile
+    firebase.auth().currentUser.updateProfile({ displayName: name })
+      // If sucesfull update firestore profile
+      .then(() => firebase.updateProfile({ displayName: name }))
+      // Notify user that email was updated sucesffully
+      .then(() => flash('success', 'Name Changed Succesfully', 'You may need to logout and login to see the effect'))
+      // Catch and display error to user with instruction to provide it to an admin
+      .catch(err => flash('danger', 'Name Failed to Change', (
         <p>
           Share the following error output with an administrator:
           <br />
@@ -158,7 +182,7 @@ class account extends Component {
               buttonProps={{ className: classes.buttonRowButton }}
             />
             <ChangeName
-              submitFunction={this.handleChangeEmailSubmit}
+              submitFunction={this.handleChangeNameSubmit}
               buttonProps={{ className: classes.buttonRowButton }}
             />
           </div>
