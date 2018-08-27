@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 
 import DashboardContainer from '../../Containers/Dashboard';
 import { createAndShowFlash } from '../../Modules/Flash';
-import { ChangeEmail, ChangeName } from './Dialogs';
+import { ChangeEmail, ChangeName, NewsOptIn } from './Dialogs';
 
 import styles from './styles';
 
@@ -28,6 +28,7 @@ class account extends Component {
     this.resendEmailVerification = this.resendEmailVerification.bind(this);
     this.handleChangeEmailSubmit = this.handleChangeEmailSubmit.bind(this);
     this.handleChangeNameSubmit = this.handleChangeNameSubmit.bind(this);
+    this.handleChangeNewsOptInSubmit = this.handleChangeNewsOptInSubmit.bind(this);
     this.reauth = this.reauth.bind(this);
   }
 
@@ -114,6 +115,28 @@ class account extends Component {
       .finally(() => firebase.reloadAuth());
   }
 
+  /**
+   * Updates the users opt-in to newsletters
+   * @param {boolean} subscribed subscribing or unsubscribing
+   */
+  handleChangeNewsOptInSubmit(subscribed) {
+    const { firebase, flash } = this.props;
+    // Update firestore profile
+    firebase.updateProfile({ subscribed })
+      // Notify user that email was updated sucesffully
+      .then(() => flash('success', `${subscribed ? 'Subscribed' : 'Unsubscribed'} sucesfully`, 'Your opt-in has been sucesfully updated.'))
+      // Catch and display error to user with instruction to provide it to an admin
+      .catch(err => flash('danger', 'Opt-in failed to update', (
+        <p>
+          Share the following error output with an administrator:
+          <br />
+          {err.message}
+        </p>
+      )))
+      // Always reload auth
+      .finally(() => firebase.reloadAuth());
+  }
+
   reauth(providerId) {
     const { firebase } = this.props;
     let provider;
@@ -157,11 +180,11 @@ class account extends Component {
         <div className={classes.root}>
           <FormControl className={classes.margin}>
             <InputLabel htmlFor="name">Name</InputLabel>
-            <Input id="name" defaultValue={profile.displayName} readOnly />
+            <Input id="name" value={profile.displayName} readOnly />
           </FormControl>
           <FormControl className={classes.margin}>
             <InputLabel htmlFor="email" error={!auth.emailVerified}>Email Address</InputLabel>
-            <Input id="email" defaultValue={profile.email} error={!auth.emailVerified} readOnly />
+            <Input id="email" value={profile.email} error={!auth.emailVerified} readOnly />
             { !auth.emailVerified && (
               <FormHelperText error>
                 Email isn&apos;t verified
@@ -176,6 +199,11 @@ class account extends Component {
               </FormHelperText>
             )}
           </FormControl>
+          <NewsOptIn
+            submitFunction={this.handleChangeNewsOptInSubmit}
+            email={profile.email}
+            subscribed={profile.subscribed || false}
+          />
           <div className={classes.buttonRow}>
             <ChangeEmail
               submitFunction={this.handleChangeEmailSubmit}
