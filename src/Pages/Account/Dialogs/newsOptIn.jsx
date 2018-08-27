@@ -64,7 +64,7 @@ class newsOptIn extends Component {
       this.setState({ emailError: false });
       this.setState({ indeterminate: false });
     }
-    
+
     return true;
   }
 
