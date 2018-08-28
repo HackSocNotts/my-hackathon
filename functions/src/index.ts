@@ -1,8 +1,9 @@
-import * as functions from 'firebase-functions';
+import { https } from 'firebase-functions';
+import { initializeApp } from 'firebase-admin';
+initializeApp();
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
+import { MakeAdmin } from './adminFunctions';
+
+const makeAdmin = https.onCall(MakeAdmin);
+
+export { makeAdmin };
