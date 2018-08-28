@@ -1,0 +1,12 @@
+{
+  "name": "my-hackathon-configurator",
+  "version": "0.0.1",
+  "description": "Configuration tool for myHackathon",
+  "repository": "https://github.com/hacksocnotts/my-hackathon",
+  "author": "Aaron Osher <aaron@aaronosher.io>",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "commander": "^2.17.1",
+    "inquirer": "^6.2.0"
+  }
+}
