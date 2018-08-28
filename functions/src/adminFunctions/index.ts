@@ -1,3 +1,4 @@
 import MakeAdmin from './makeAdmin';
+import RemoveAdmin from './removeAdmin';
 
-export { MakeAdmin };
+export { MakeAdmin, RemoveAdmin };
