@@ -1,5 +1,7 @@
-import { auth, firestore } from 'firebase-admin';
+import { auth, firestore, https } from 'firebase-admin';
 import { assignClaim } from '../utils';
+
+const { HttpsError } = https;
 
 const makeAdmin = async (data, context) => {
   const issuer = await auth().getUser(context.auth.uid);
@@ -11,7 +13,7 @@ const makeAdmin = async (data, context) => {
     .then(() => assignClaim(issuer, target, { admin: true }))
     .catch(err => {
       console.error(err);
-      return { error: 'Unkown server error' };
+      throw new HttpsError('internal', 'Unkown server error');
     });
 };
 
