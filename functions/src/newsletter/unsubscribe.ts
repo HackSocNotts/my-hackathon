@@ -1,9 +1,11 @@
 
 import { CallableContext } from 'firebase-functions/lib/providers/https';
 import { auth, firestore } from 'firebase-admin';
-import { config } from 'firebase-functions';
+import { config, https } from 'firebase-functions';
 import { createHash } from 'crypto';
 const mailchimpApi = require('mailchimp-api-v3');
+
+const { HttpsError } = https;
 
 const mailchimp = new mailchimpApi(config().mailchimp.api);
 const db = firestore();
@@ -39,7 +41,8 @@ const unsubscribe = async (data: null, context: CallableContext) => {
         if (err.status === 404) {
           return false;
         } else {
-          throw Error(err);
+          console.error(err);
+          throw new  HttpsError('internal', 'Unknown error occured.');
         }
       });
 
@@ -50,19 +53,14 @@ const unsubscribe = async (data: null, context: CallableContext) => {
         console.error(`Newsletter subscription status discrepancy for uid(${user.uid}): Mailchimp(${mailchimpSubscribed}) Firestore(${dbSubscribed})`);
       }
   
-      // Check if subscribed
-      if (!mailchimpSubscribed) {
-        if (discrepancy) {
-          return userDocument.update({ subscribed: false })
-            .then(() => ({
-              error: 'Not subscribed',
-            }))
-            .catch(err => console.error(err));
-        }
-        return {
-          error: 'Not subscribed',
-        };
+      // Check if not subscribed
+    if (mailchimpSubscribed) {
+      if (discrepancy) {
+        return userDocument.update({ subscribed: false })
+          .catch(err => console.error(err));
       }
+      throw new HttpsError('failed-precondition', 'Not subscribed')
+    }
 
     // Subscribe User
     return mailchimp.put({
@@ -78,13 +76,14 @@ const unsubscribe = async (data: null, context: CallableContext) => {
     })
       .then(() => userDocument.update({ subscribed: false }))
       .then(() => ({ data: 'Unsubscribed sucesfully'}))
-      .catch(err => { throw Error(err); });
+      .catch(err => { 
+        console.error(err);
+        throw new HttpsError('internal', 'Unkown error occured');
+      });
 
   } catch(err) {
     console.error(err);
-    return {
-      error: 'Unknown server error',
-    };
+    throw new HttpsError('internal', 'Unkown error occured');
   }
 };
 

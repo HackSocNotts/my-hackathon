@@ -1,9 +1,11 @@
 
 import { CallableContext } from 'firebase-functions/lib/providers/https';
 import { auth, firestore } from 'firebase-admin';
-import { config } from 'firebase-functions';
+import { config, https } from 'firebase-functions';
 import { createHash } from 'crypto';
 const mailchimpApi = require('mailchimp-api-v3');
+
+const { HttpsError } = https;
 
 const mailchimp = new mailchimpApi(config().mailchimp.api);
 const db = firestore();
@@ -15,9 +17,7 @@ const subscribe = async (data: null, context: CallableContext) => {
 
     // Check if email verified
     if (!user.emailVerified) {
-      return {
-        error: 'User not verified',
-      };
+      throw new HttpsError('failed-precondition', 'User not verified');
     }
 
     // get user's subscription status in database
@@ -46,7 +46,8 @@ const subscribe = async (data: null, context: CallableContext) => {
         if (err.status === 404) {
           return false;
         } else {
-          throw Error(err);
+          console.error(err);
+          throw new  HttpsError('internal', 'Unknown error occured.');
         }
       });
 
@@ -61,14 +62,9 @@ const subscribe = async (data: null, context: CallableContext) => {
     if (mailchimpSubscribed) {
       if (discrepancy) {
         return userDocument.update({ subscribed: true })
-          .then(() => ({
-            error: 'Already subscribed',
-          }))
           .catch(err => console.error(err));
       }
-      return {
-        error: 'Already subscribed',
-      };
+      throw new HttpsError('failed-precondition', 'Already subscribed')
     }
 
     // Subscribe User
@@ -90,13 +86,14 @@ const subscribe = async (data: null, context: CallableContext) => {
     })
       .then(() => userDocument.update({ subscribed: true }))
       .then(() => ({ data: 'Subscribed sucesfully'}))
-      .catch(err => { throw Error(err); });
+      .catch(err => { 
+        console.error(err);
+        throw new HttpsError('internal', 'Unkown error occured');
+      });
 
   } catch(err) {
     console.error(err);
-    return {
-      error: 'Unknown server error',
-    };
+    throw new HttpsError('internal', 'Unkown error occured');
   }
 };
 
