@@ -122,7 +122,7 @@ class account extends Component {
   handleChangeNewsOptInSubmit(subscribed) {
     const { firebase, flash } = this.props;
     // Update firestore profile
-    firebase.updateProfile({ subscribed })
+    firebase.functions().httpsCallable(subscribed ? 'subscribeToNewsletter' : 'unsubscibeFromNewsletter')()
       // Notify user that email was updated sucesffully
       .then(() => flash('success', `${subscribed ? 'Subscribed' : 'Unsubscribed'} sucesfully`, 'Your opt-in has been sucesfully updated.'))
       // Catch and display error to user with instruction to provide it to an admin
