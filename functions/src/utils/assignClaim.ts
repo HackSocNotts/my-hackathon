@@ -20,7 +20,7 @@ const assignClaim = (issuer: auth.UserRecord, target: auth.UserRecord, claim: an
     .then(() => ({ data: { success: true } }))
     .catch(err => {
       console.error(err);
-      thorw new HttpsError('internal', 'Unknown error occured');
+      throw new HttpsError('internal', 'Unknown error occured');
     });
 };
 
