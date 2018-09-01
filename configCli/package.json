@@ -1,12 +1,17 @@
 {
-  "name": "my-hackathon-configurator",
+  "name": "my-hackathon-config",
   "version": "0.0.1",
   "description": "Configuration tool for myHackathon",
   "repository": "https://github.com/hacksocnotts/my-hackathon",
   "author": "Aaron Osher <aaron@aaronosher.io>",
   "license": "GPL-3.0",
+  "preferGlobal": true,
+  "bin": {
+    "myHackathon": "./contact.js"
+  },
   "dependencies": {
     "commander": "^2.17.1",
+    "firebase-tools": "^4.2.1",
     "inquirer": "^6.2.0"
   }
 }
