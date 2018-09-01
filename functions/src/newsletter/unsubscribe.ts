@@ -54,7 +54,7 @@ const unsubscribe = async (data: null, context: CallableContext) => {
       }
   
       // Check if not subscribed
-    if (mailchimpSubscribed) {
+    if (!mailchimpSubscribed) {
       if (discrepancy) {
         return userDocument.update({ subscribed: false })
           .catch(err => console.error(err));
