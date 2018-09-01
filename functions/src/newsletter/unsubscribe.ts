@@ -82,6 +82,9 @@ const unsubscribe = async (data: null, context: CallableContext) => {
       });
 
   } catch(err) {
+    if (err instanceof(HttpsError)) {
+      throw new HttpsError(err.code, err.message);
+    }
     console.error(err);
     throw new HttpsError('internal', 'Unkown error occured');
   }
