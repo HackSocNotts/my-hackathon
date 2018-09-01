@@ -15,3 +15,5 @@ const handleSignUp = (event) => {
     .then(() => auth().setCustomUserClaims(user.uid, { admin: false }))
     .catch(err => console.error);
 }
+
+export default handleSignUp;
