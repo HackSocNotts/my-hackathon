@@ -1,4 +1,5 @@
-import { auth, firestore, https } from 'firebase-admin';
+import { auth, firestore } from 'firebase-admin';
+import { https } from 'firebase-functions';
 import { assignClaim } from '../utils';
 
 const { HttpsError } = https;
