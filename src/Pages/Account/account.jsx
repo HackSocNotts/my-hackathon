@@ -11,6 +11,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Typography from '@material-ui/core/Typography';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import DashboardContainer from '../../Containers/Dashboard';
 import { createAndShowFlash } from '../../Modules/Flash';
@@ -21,6 +22,7 @@ import styles from './styles';
 class account extends Component {
   state = {
     showVerificationButton: true,
+    showNewsletterProgress: false,
   };
 
   constructor(props) {
@@ -121,6 +123,8 @@ class account extends Component {
    */
   handleChangeNewsOptInSubmit(subscribed) {
     const { firebase, flash } = this.props;
+    // Show newsletter progress
+    this.setState({ showNewsletterProgress: true });
     // Update firestore profile
     firebase.functions().httpsCallable(subscribed ? 'subscribeToNewsletter' : 'unsubscibeFromNewsletter')()
       // Notify user that email was updated sucesffully
@@ -134,7 +138,10 @@ class account extends Component {
         </p>
       )))
       // Always reload auth
-      .finally(() => firebase.reloadAuth());
+      .finally(() => {
+        this.setState({ showNewsletterProgress: false });
+        firebase.reloadAuth();
+      });
   }
 
   reauth(providerId) {
@@ -167,7 +174,7 @@ class account extends Component {
 
   render() {
     const { profile, auth, classes } = this.props;
-    const { showVerificationButton } = this.state;
+    const { showVerificationButton, showNewsletterProgress } = this.state;
     return (
       <DashboardContainer isLoading={(!profile.isLoaded || !auth.isLoaded)} pageTitle="Account Settings">
         <Typography variant="title" gutterBottom>
@@ -199,9 +206,10 @@ class account extends Component {
               </FormHelperText>
             )}
           </FormControl>
+          {showNewsletterProgress && <LinearProgress />}
           <NewsOptIn
             submitFunction={this.handleChangeNewsOptInSubmit}
-            email={profile.email}
+            email={profile.email || ''}
             subscribed={profile.subscribed || false}
           />
           <div className={classes.buttonRow}>
