@@ -10,9 +10,11 @@ import Icon from '@material-ui/core/Icon';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import MinimalContainer from '../../Containers/Minimal';
 import { createAndShowFlash } from '../../Modules/Flash';
+import { waitForRedirectOnLogin } from '../../Modules/Login';
 import { siteVars } from '../../config';
 import styles from './styles';
 import logo from '../../logo.svg';
+import MlhIcon from '../../Components/MlhIcon';
 
 class login extends Component {
   constructor(props) {
@@ -23,14 +25,18 @@ class login extends Component {
         github: false,
         facebook: false,
         twitter: false,
+        mlh: false,
       },
     };
+
+    props.waitForLoginRedirect();
 
     this.login = this.login.bind(this);
     this.loginWithGoogle = this.loginWithGoogle.bind(this);
     this.loginWithFacebook = this.loginWithFacebook.bind(this);
     this.loginWithGitHub = this.loginWithGitHub.bind(this);
     this.loginWithTwitter = this.loginWithTwitter.bind(this);
+    this.loginWithMyMLH = this.loginWithMyMLH.bind(this);
     this.showLoginError = this.showLoginError.bind(this);
   }
 
@@ -87,6 +93,27 @@ class login extends Component {
       });
   }
 
+  loginWithMyMLH() {
+    const width = 500;
+    const height = 600;
+    const top = (window.screen.availHeight - height) / 2;
+    const left = (window.screen.availWidth - width) / 2;
+    const options = {
+      width,
+      height,
+      top: top > 0 ? top : 0,
+      left: left > 0 ? left : 0,
+      location: true,
+      resizable: true,
+      statusbar: true,
+      toolbar: false,
+    };
+    const url = 'https://my.mlh.io/oauth/authorize?client_id=b2f7b51f2b987f35566b29a293bdd980b56020647df0d2034f51488a64ce0944&redirect_uri=http://localhost:3000/_auth/mlh&response_type=token';
+    const mlhWindow = window.open(url, 'myMLH Login', options);
+    console.log(mlhWindow);
+    this.showLoginError('myMLH Not Configured');
+  }
+
   showLoginError(message) {
     const { flash } = this.props;
     flash('danger', 'Login Error Occured', message);
@@ -106,6 +133,19 @@ class login extends Component {
         <Typography variant="subheading">
           Select a platform to Login With to begin.
         </Typography>
+        <div className={classes.wrapper}>
+          <Button
+            fullWidth
+            variant="raised"
+            color="primary"
+            className={[classes.submit, classes.mlh].join(' ')}
+            onClick={this.loginWithMyMLH}
+            disabled={loading.mlh}
+          >
+            <MlhIcon nativeColor="#333333" />
+          </Button>
+          {loading.mlh && <CircularProgress size={24} thickness={8} className={[classes.buttonProgress, classes.mlhProgress].join(' ')} />}
+        </div>
         <div className={classes.wrapper}>
           <Button
             fullWidth
@@ -167,6 +207,7 @@ login.propTypes = {
   firebase: PropTypes.any.isRequired,
   classes: PropTypes.object.isRequired,
   flash: PropTypes.func.isRequired,
+  waitForLoginRedirect: PropTypes.func.isRequired,
 };
 
 login.contextTypes = {
@@ -178,6 +219,7 @@ const mapStateToProps = state => ({ });
 
 const mapDispatchToProps = dispatch => ({
   flash: (type, title, message) => dispatch(createAndShowFlash(type, title, message)),
+  waitForLoginRedirect: () => dispatch(waitForRedirectOnLogin()),
 });
 
 export default firebaseConnect()(withStyles(styles)(
