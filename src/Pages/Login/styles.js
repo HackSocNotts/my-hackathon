@@ -30,6 +30,12 @@ const styles = theme => ({
       backgroundColor: '#293e6a',
     },
   },
+  mlh: {
+    backgroundColor: '#f7db2f',
+    '&:hover': {
+      backgroundColor: '#F7E15D',
+    },
+  },
   googleProgress: {
     color: '#ea4335',
   },
