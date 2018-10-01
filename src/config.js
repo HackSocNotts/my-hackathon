@@ -54,6 +54,25 @@ const siteVars = {
    * @default myHackathon
    */
   hackathonName: process.env.REACT_APP_NAME,
+
+  /**
+   * Base URL for the myHackathon instance with no trailing slash
+   * Set in .env file
+   * @default http://localhost:3000
+   */
+  websiteUrl: process.env.REACT_APP_WEB_URL,
+};
+
+/**
+ * configuration variables for myMLH
+ */
+const myMlhVars = {
+  /**
+   * AppID for myMLH app instance
+   * set in .env file
+   * @default null
+   */
+  appId: process.env.REACT_APP_MLH_APP_ID,
 };
 
 // incomplete, submitted, accepted, rejected, waitlsted, confirmed, declined, expired
@@ -142,6 +161,7 @@ export {
   firebase,
   reduxFirebase,
   siteVars,
+  myMlhVars,
   applicationStates,
   dashboardButtons,
 };
