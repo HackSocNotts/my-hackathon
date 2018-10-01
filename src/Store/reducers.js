@@ -2,14 +2,16 @@ import { combineReducers } from 'redux';
 import { firebaseReducer as firebase } from 'react-redux-firebase';
 import { firestoreReducer as firestore } from 'redux-firestore';
 import { reducer as form } from 'redux-form';
-import { routerReducer as routing } from 'react-router-redux';
+import navigation from '../Modules/Navigation';
+import flash from '../Modules/Flash';
 
 const makeRootReducer = asyncReducers => combineReducers({
   // Add sync reducers here
   firebase,
   firestore,
   form,
-  routing,
+  navigation,
+  flash,
   ...asyncReducers,
 });
 
