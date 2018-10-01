@@ -15,6 +15,7 @@ import { siteVars } from '../../config';
 import styles from './styles';
 import logo from '../../logo.svg';
 import MlhIcon from '../../Components/MlhIcon';
+import { login as MyMlhLogin } from '../../Utlis/MyMlhLogin';
 
 class login extends Component {
   constructor(props) {
@@ -94,23 +95,7 @@ class login extends Component {
   }
 
   loginWithMyMLH() {
-    const width = 500;
-    const height = 600;
-    const top = (window.screen.availHeight - height) / 2;
-    const left = (window.screen.availWidth - width) / 2;
-    const options = {
-      width,
-      height,
-      top: top > 0 ? top : 0,
-      left: left > 0 ? left : 0,
-      location: true,
-      resizable: true,
-      statusbar: true,
-      toolbar: false,
-    };
-    const url = 'https://my.mlh.io/oauth/authorize?client_id=b2f7b51f2b987f35566b29a293bdd980b56020647df0d2034f51488a64ce0944&redirect_uri=http://localhost:3000/_auth/mlh&response_type=token';
-    const mlhWindow = window.open(url, 'myMLH Login', options);
-    console.log(mlhWindow);
+    MyMlhLogin();
     this.showLoginError('myMLH Not Configured');
   }
 
