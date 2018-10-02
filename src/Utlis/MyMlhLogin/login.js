@@ -28,15 +28,22 @@ const openPopUp = (name = '') => {
   return window.open(url, name, optionsString);
 };
 
+const handleMessage = (event) => {
+  const firebase = getFirebase();
+  if (!event.data.myMlhCode) {
+    // something from an unknown domain, let's ignore it
+    return;
+  }
+  console.log('Message from', event.origin, event.data, event);
+  const code = event.data.myMlhCode;
+  firebase.functions().httpsCallable('myMlhLogin')(code)
+    .then(res => console.log('myMlhFunctionResponse', res))
+    .catch(err => console.error('myMlhFunctionError', err))
+    .finally(() => window.removeEventListener('message', handleMessage));
+};
+
 const login = () => {
-  // const firebase = getFirebase();
-  window.addEventListener('message', (event) => {
-    if (!event.data.myMlhCode) {
-      // something from an unknown domain, let's ignore it
-      return;
-    }
-    console.log('Message from', event.origin, event.data, event);
-  });
+  window.addEventListener('message', handleMessage);
   openPopUp('myMLH Login');
 };
 
