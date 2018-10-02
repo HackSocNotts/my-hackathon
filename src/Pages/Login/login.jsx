@@ -10,7 +10,6 @@ import Icon from '@material-ui/core/Icon';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import MinimalContainer from '../../Containers/Minimal';
 import { createAndShowFlash } from '../../Modules/Flash';
-import { waitForRedirectOnLogin } from '../../Modules/Login';
 import { siteVars } from '../../config';
 import styles from './styles';
 import logo from '../../logo.svg';
@@ -29,8 +28,6 @@ class login extends Component {
         mlh: false,
       },
     };
-
-    props.waitForLoginRedirect();
 
     this.login = this.login.bind(this);
     this.loginWithGoogle = this.loginWithGoogle.bind(this);
@@ -192,7 +189,6 @@ login.propTypes = {
   firebase: PropTypes.any.isRequired,
   classes: PropTypes.object.isRequired,
   flash: PropTypes.func.isRequired,
-  waitForLoginRedirect: PropTypes.func.isRequired,
 };
 
 login.contextTypes = {
@@ -204,7 +200,6 @@ const mapStateToProps = state => ({ });
 
 const mapDispatchToProps = dispatch => ({
   flash: (type, title, message) => dispatch(createAndShowFlash(type, title, message)),
-  waitForLoginRedirect: () => dispatch(waitForRedirectOnLogin()),
 });
 
 export default firebaseConnect()(withStyles(styles)(
