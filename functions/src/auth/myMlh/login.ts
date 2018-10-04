@@ -1,7 +1,9 @@
 import { CallableContext } from 'firebase-functions/lib/providers/https';
-import { auth } from 'firebase-admin';
+import { auth, firestore } from 'firebase-admin';
 import { config, https } from 'firebase-functions';
 const rp = require('request-promise-native');
+
+const db = firestore();
 
 const { HttpsError } = https;
 const baseUrl = 'https://my.mlh.io';
@@ -30,16 +32,26 @@ const checkIfUserExists = (email: string): Promise<string> => auth().getUserByEm
   .then(user => user.uid)
   .catch(() => Promise.reject(false));
 
-const setUpUser = (data: myMlhResponse) => {
-  console.log('setUpUser');
-  return auth().createUser({
+const updateUser = (uid: string, data: myMlhResponse): Promise<string> => db.doc(`users/${uid}`)
+  .update({
+    myMlhData: data
+  })
+  .catch(() => db.doc(`users/${uid}`).set({
+    displayName: `${data.first_name} ${data.last_name}`,
+    email: data.email,
+    admin: false,
+    myMlhData: data,
+  }))
+  .then(() => uid);
+
+const setUpUser = (data: myMlhResponse) => auth().createUser({
   displayName: `${data.first_name} ${data.last_name}`,
   email: data.email,
   emailVerified: true
 })
   .then(user => user.uid)
+  .then(uid => updateUser(uid, data))
   .then(uid => auth().createCustomToken(uid));
-}
 
 const login = async (data: string, context: CallableContext) => {
   const url = buildUrl(data);
@@ -53,6 +65,7 @@ const login = async (data: string, context: CallableContext) => {
     const token = (await rp(options)).access_token;
     const res = await retrieveUser(token);
     return checkIfUserExists(res.data.email)
+      .then(uid => updateUser(uid, res.data))
       .then(uid => auth().createCustomToken(uid))
       .catch(err => {
         if (err === false) {
