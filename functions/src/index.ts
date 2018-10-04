@@ -1,6 +1,11 @@
 import { https, auth } from 'firebase-functions';
-import { initializeApp } from 'firebase-admin';
-initializeApp();
+import { initializeApp, credential } from 'firebase-admin';
+
+const serviceAccount = require('../serviceAccount.json');
+
+initializeApp({
+  credential: credential.cert(serviceAccount),
+});
 
 import { MakeAdmin, RemoveAdmin } from './adminFunctions';
 import { HandleSignUp } from './automatic/signup';
