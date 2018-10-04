@@ -1,5 +1,7 @@
 import { getFirebase } from 'react-redux-firebase';
+import { push } from 'connected-react-router';
 import { siteVars, myMlhVars } from '../../config';
+import store from '../../Store';
 
 const makeUrl = () => {
   const { appId } = myMlhVars;
@@ -37,7 +39,8 @@ const handleMessage = (event) => {
   console.log('Message from', event.origin, event.data, event);
   const code = event.data.myMlhCode;
   firebase.functions().httpsCallable('myMlhLogin')(code)
-    .then(res => console.log('myMlhFunctionResponse', res))
+    .then(res => firebase.auth().signInWithCustomToken(res.data))
+    .then(() => store.dispatch(push('/')))
     .catch(err => console.error('myMlhFunctionError', err))
     .finally(() => window.removeEventListener('message', handleMessage));
 };
