@@ -26,6 +26,21 @@ const retrieveUser = (token: string) => {
   });
 };
 
+const checkIfUserExists = (email: string): Promise<string> => auth().getUserByEmail(email)
+  .then(user => user.uid)
+  .catch(() => Promise.reject(false));
+
+const setUpUser = (data: myMlhResponse) => {
+  console.log('setUpUser');
+  return auth().createUser({
+  displayName: `${data.first_name} ${data.last_name}`,
+  email: data.email,
+  emailVerified: true
+})
+  .then(user => user.uid)
+  .then(uid => auth().createCustomToken(uid));
+}
+
 const login = async (data: string, context: CallableContext) => {
   const url = buildUrl(data);
   const options = {
@@ -37,7 +52,15 @@ const login = async (data: string, context: CallableContext) => {
   try {
     const token = (await rp(options)).access_token;
     const res = await retrieveUser(token);
-    return res;
+    return checkIfUserExists(res.data.email)
+      .then(uid => auth().createCustomToken(uid))
+      .catch(err => {
+        if (err === false) {
+          return setUpUser(res.data as myMlhResponse);
+        } else {
+          return Promise.reject(err);
+        }
+      });
   } catch (err) {
     console.error(err);
     throw new HttpsError('internal', err);
@@ -45,3 +68,23 @@ const login = async (data: string, context: CallableContext) => {
 };
 
 export default login;
+
+interface myMlhResponse {
+  id: number;
+  email: string;
+  created_at: string;
+  updated_at: string;
+  first_name: string;
+  last_name: string;
+  level_of_study: string;
+  major: string;
+  shirt_size: string;
+  dietary_restrictions: string;
+  special_needs: string;
+  date_of_birth: string;
+  school: {
+    id: number;
+    name: string;
+  };
+  scoes: string[];
+}
