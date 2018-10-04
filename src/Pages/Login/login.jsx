@@ -92,8 +92,8 @@ class login extends Component {
   }
 
   loginWithMyMLH() {
+    this.setState({ loading: { mlh: true } });
     MyMlhLogin();
-    this.showLoginError('myMLH Not Configured');
   }
 
   showLoginError(message) {

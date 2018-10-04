@@ -36,7 +36,6 @@ const handleMessage = (event) => {
     // something from an unknown domain, let's ignore it
     return;
   }
-  console.log('Message from', event.origin, event.data, event);
   const code = event.data.myMlhCode;
   firebase.functions().httpsCallable('myMlhLogin')(code)
     .then(res => firebase.auth().signInWithCustomToken(res.data))
