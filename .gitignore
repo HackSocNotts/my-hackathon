@@ -30,3 +30,7 @@ yarn-error.log*
 functions/\.runtimeconfig\.json
 
 *.env
+
+\.runtimeconfig\.json
+
+functions/serviceAccount\.json
