@@ -48,6 +48,9 @@ const styles = theme => ({
   facebookProgress: {
     color: '#3b5998',
   },
+  mlhProgress: {
+    color: '#f7db2f',
+  },
   buttonProgress: {
     position: 'absolute',
     top: '50%',
