@@ -117,7 +117,16 @@ const SingleValue = props => (
   </Typography>
 );
 
-const ValueContainer = props => <div className={props.selectProps.classes.valueContainer}>{props.children}</div>;
+const ValueContainer = props => (
+  <div className={props.selectProps.classes.valueContainer}>
+    {props.children}
+  </div>
+);
+
+ValueContainer.propTypes = {
+  selectProps: PropTypes.array.isRequired,
+  children: PropTypes.node.isRequired,
+};
 
 const Menu = props => (
   <Paper square className={props.selectProps.classes.paper} {...props.innerProps}>
@@ -137,7 +146,7 @@ const components = {
 
 class EthnicityDropdown extends Component {
   render() {
-    const { profile, classes, theme } = this.props;
+    const { classes, theme } = this.props;
 
     const selectStyles = {
       input: base => ({
@@ -183,7 +192,6 @@ class EthnicityDropdown extends Component {
 }
 
 EthnicityDropdown.propTypes = {
-  profile: PropTypes.any.isRequired,
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
 };
