@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { authorizeEventbrite } from '../../Utlis/Eventbrite';
-// import { siteVars } from '../../config';
+import { siteVars } from '../../config';
 
 const getCode = (search) => {
   const codeRegex = /(?:code=)(\w*)/g;
@@ -16,11 +15,14 @@ const getCode = (search) => {
 };
 
 class EventbriteReturn extends Component {
-  componentWillMount() {
+  componentDidMount() {
     const { search } = this.props;
-    const code = getCode(search);
+    const { websiteUrl } = siteVars;
 
-    authorizeEventbrite(code);
+    const code = getCode(search);
+    const win = window.opener;
+    win.postMessage({ code }, websiteUrl);
+    window.close();
   }
 
   render() {
