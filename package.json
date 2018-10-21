@@ -7,6 +7,7 @@
   "homepage": "https://myhackathon-dev.firebaseapp.com/",
   "scripts": {
     "start": "react-scripts start",
+    "serve": "REACT_APP_LOCAL_FUNCTIONS=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",

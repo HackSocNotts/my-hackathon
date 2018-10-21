@@ -40,9 +40,12 @@ export default (initialState = {}) => {
   }
 
   // Initialize Firebase
-  firebase.initializeApp(fbConfig);
+  const app = firebase.initializeApp(fbConfig);
   firebase.functions();
   firebase.auth();
+  if (process.env.REACT_APP_LOCAL_FUNCTIONS) {
+    app.functions().useFunctionsEmulator('http://localhost:5000');
+  }
   const firestore = firebase.firestore();
   firestore.settings({ timestampsInSnapshots: true });
 
