@@ -12,6 +12,7 @@ import AdminPage from './Pages/Admin';
 import ApplicationPage from './Pages/Application';
 import AccountPage from './Pages/Account';
 import MyMLHReturn from './Pages/MyMLHReturn';
+import EventbriteReturn from './Pages/EventbriteReturn';
 import theme from './theme';
 import './App.css';
 
@@ -29,6 +30,7 @@ class App extends Component {
             <Route path="/account" component={RequireAuth()(AccountPage)} />
             <Route path="/login" component={LoginPage} />
             <Route path="/_auth/mlh" component={MyMLHReturn} />
+            <Route path="/_auth/eventbrite" component={EventbriteReturn} />
           </Switch>
         </ConnectedRouter>
       </MuiThemeProvider>

@@ -75,6 +75,18 @@ const myMlhVars = {
   appId: process.env.REACT_APP_MLH_APP_ID,
 };
 
+/**
+ * configuration varaibles for eventbrite
+ */
+const eventbriteVars = {
+  /**
+   * clientId for eventbrite
+   * set in .env file
+   * @defualt null
+   */
+  clientKey: process.env.REACT_APP_EVENTBRITE_CLIENT,
+};
+
 // incomplete, submitted, accepted, rejected, waitlsted, confirmed, declined, expired
 const applicationStates = {
   /**
@@ -164,4 +176,5 @@ export {
   myMlhVars,
   applicationStates,
   dashboardButtons,
+  eventbriteVars,
 };
