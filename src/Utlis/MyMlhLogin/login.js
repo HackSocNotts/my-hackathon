@@ -31,15 +31,17 @@ const openPopUp = (name = '') => {
 };
 
 const handleMessage = (event) => {
+  const { websiteUrl } = siteVars;
   const firebase = getFirebase();
   if (!event.data.myMlhCode) {
     // something from an unknown domain, let's ignore it
     return;
   }
   const code = event.data.myMlhCode;
-  firebase.functions().httpsCallable('myMlhLogin')(code)
+  firebase.functions().httpsCallable('myMlhLogin')({ code, uri: `${websiteUrl}/_auth/mlh` })
     .then(res => firebase.auth().signInWithCustomToken(res.data))
     .then(() => store.dispatch(push('/')))
+    // eslint-disable-next-line
     .catch(err => console.error('myMlhFunctionError', err))
     .finally(() => window.removeEventListener('message', handleMessage));
 };
