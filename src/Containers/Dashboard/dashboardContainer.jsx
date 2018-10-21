@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { compose } from 'redux';
+import { withFirebase } from 'react-redux-firebase';
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
@@ -16,10 +18,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import ApplicationIcon from '@material-ui/icons/InsertDriveFile';
-import PeopleIcon from '@material-ui/icons/People';
-import SettingsIcon from '@material-ui/icons/Settings';
 import { connect } from 'react-redux';
 import { BrowserView } from 'react-device-detect';
 import NotificationsMenu from '../../Components/notificationsMenu';
@@ -31,6 +29,25 @@ import { openNavigationDrawer, closeNavigationDrawer } from '../../Modules/Navig
 import Flash from '../../Components/Flash';
 
 class dashboardContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.hasClaim = this.hasClaim.bind(this);
+  }
+
+  hasClaim(claim) {
+    const { firebase } = this.props;
+    if (firebase.auth().loggedIn) {
+      firebase
+        .auth()
+        .currentUser.getIdTokenResult(true)
+        .then((idTokenResult) => {
+          firebase.reloadAuth();
+          console.log(idTokenResult);
+        });
+    }
+    // return claims.includes(claim);
+  }
+
   render() {
     const {
       classes,
@@ -40,6 +57,7 @@ class dashboardContainer extends Component {
       handleDrawerOpen,
       isLoading,
       pageTitle,
+      navItems,
     } = this.props;
 
     return (
@@ -103,30 +121,20 @@ class dashboardContainer extends Component {
               </Typography>
             </div>
             <List>
-              <ListItem component={NavLink} exact to="/" activeClassName={classes.activeListItem}>
-                <ListItemIcon>
-                  <DashboardIcon color="primary" />
-                </ListItemIcon>
-                <ListItemText primary="Dashboard" />
-              </ListItem>
-              <ListItem component={NavLink} to="/application" activeClassName={classes.activeListItem}>
-                <ListItemIcon>
-                  <ApplicationIcon color="primary" />
-                </ListItemIcon>
-                <ListItemText primary="Application" />
-              </ListItem>
-              <ListItem component={NavLink} to="/team" activeClassName={classes.activeListItem}>
-                <ListItemIcon>
-                  <PeopleIcon color="primary" />
-                </ListItemIcon>
-                <ListItemText primary="Team" />
-              </ListItem>
-              <ListItem component={NavLink} to="/admin" activeClassName={classes.activeListItem}>
-                <ListItemIcon>
-                  <SettingsIcon color="primary" />
-                </ListItemIcon>
-                <ListItemText primary="Admin" />
-              </ListItem>
+              {navItems.map(navItem => (
+                <ListItem
+                  component={NavLink}
+                  exact
+                  to={navItem.to}
+                  key={navItem.to}
+                  activeClassName={classes.activeListItem}
+                >
+                  <ListItemIcon>
+                    {navItem.icon}
+                  </ListItemIcon>
+                  <ListItemText primary={navItem.text} />
+                </ListItem>
+              ))}
             </List>
           </Drawer>
           <main className={classes.content}>
@@ -150,6 +158,14 @@ dashboardContainer.propTypes = {
   handleDrawerClose: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
   pageTitle: PropTypes.string,
+  firebase: PropTypes.shape({
+    auth: PropTypes.any,
+  }).isRequired,
+  navItems: PropTypes.arrayOf(PropTypes.shape({
+    to: PropTypes.string,
+    text: PropTypes.string,
+    icon: PropTypes.node,
+  })).isRequired,
 };
 
 dashboardContainer.defaultProps = {
@@ -159,6 +175,7 @@ dashboardContainer.defaultProps = {
 
 const mapStateToProps = state => ({
   open: state.navigation.drawer.open,
+  navItems: state.navigation.items,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -167,6 +184,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-export default withStyles(styles, { withTheme: true })(
-  connect(mapStateToProps, mapDispatchToProps)(dashboardContainer),
-);
+export default compose(
+  withFirebase,
+  withStyles(styles, { withTheme: true }),
+  connect(mapStateToProps, mapDispatchToProps),
+)(dashboardContainer);
