@@ -146,7 +146,12 @@ const components = {
 
 class EventbriteEventsDropdown extends Component {
   render() {
-    const { classes, theme, options } = this.props;
+    const {
+      classes,
+      theme,
+      options,
+      input: { value, onChange },
+    } = this.props;
 
     const selectStyles = {
       input: base => ({
@@ -175,6 +180,8 @@ class EventbriteEventsDropdown extends Component {
               shrink: true,
             },
           }}
+          value={value}
+          onChange={onChange}
         />
       </React.Fragment>
     );
@@ -188,6 +195,7 @@ EventbriteEventsDropdown.propTypes = {
     label: PropTypes.string,
     value: PropTypes.string,
   })).isRequired,
+  input: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(EventbriteEventsDropdown);
