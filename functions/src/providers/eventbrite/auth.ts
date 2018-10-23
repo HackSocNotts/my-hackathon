@@ -1,6 +1,8 @@
 import { CallableContext } from 'firebase-functions/lib/providers/https';
 import { firestore } from 'firebase-admin';
 import { config, https } from 'firebase-functions';
+import getAll from './getAll';
+
 const rp = require('request-promise-native');
 
 const db = firestore();
@@ -24,37 +26,13 @@ const buildRequest = (data: AuthRequest) => {
   };
 };
 
-const getAll = async (url: string, bearer: string, token: string, items?: any[], continuation?: string) => {
-  const response = JSON.parse(await rp
-    .get(continuation ? `${url}?continuation=${continuation}` : url)
-    .auth(null, null, true, bearer));
-
-  console.log('response', response.pagination);
-  
-  if (response.pagination.has_more_items && response.pagination.continuation) {
-    return getAll(
-      url,
-      bearer,
-      token,
-      (items ? [...items, ...response[token]] : response[token]),
-      response.pagination.continuation
-    );
-  } else {
-    return items ? [...items, ...response[token]] : response[token];
-  }
-}
-
 const auth = async (data: AuthRequest, context: CallableContext) => {
   const url = buildUrl(data);
   const body = buildRequest(data);
 
   const authResponse = JSON.parse(await rp.post(url).form(body));
 
-  console.log('auth response', authResponse);
-
   const bearerToken = authResponse.access_token;
-
-  console.log('beareToken', bearerToken);
 
   const uid = context.auth.uid;
 
