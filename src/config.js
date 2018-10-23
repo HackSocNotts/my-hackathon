@@ -169,6 +169,32 @@ const dashboardButtons = {
   team: 'Manage Team',
 };
 
+const navigationPages = {
+  /**
+   * Dashboard is the main page and summarises a user's application state
+   * @default 'Dashboard'
+   */
+  dashboard: 'Dashboard',
+
+  /**
+   * Applicaiton is the page where the user fills in their details
+   * @default 'Application'
+   */
+  applciation: 'Application',
+
+  /**
+   * Team is the page where users can find and make teams
+   * @default 'Teams'
+   */
+  teams: 'Teams',
+
+  /**
+   * Admin is where all management happens
+   * @default 'Admin'
+   */
+  admin: 'Admin',
+};
+
 export {
   firebase,
   reduxFirebase,
@@ -177,4 +203,5 @@ export {
   applicationStates,
   dashboardButtons,
   eventbriteVars,
+  navigationPages,
 };
