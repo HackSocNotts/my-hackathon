@@ -11,7 +11,11 @@ import { MakeAdmin, RemoveAdmin } from './adminFunctions';
 import { HandleSignUp } from './automatic/signup';
 import { NewsletterSubscribe, NewsletterUnsubscribe } from './newsletter';
 import { login as myMlhLoginFunction } from './auth/myMlh';
-import { auth as EventbriteAuthFlow, save as SaveEvenbriteEvent } from './providers/eventbrite';
+import {
+  auth as EventbriteAuthFlow,
+  save as SaveEvenbriteEvent,
+  fetchTickets as FetchEventbriteTickets,
+} from './providers/eventbrite';
 
 export const makeAdmin = https.onCall(MakeAdmin);
 export const removeAdmin = https.onCall(RemoveAdmin);
@@ -21,3 +25,4 @@ export const handleSignUp = auth.user().onCreate(HandleSignUp);
 export const myMlhLogin = https.onCall(myMlhLoginFunction);
 export const authEventbrite = https.onCall(EventbriteAuthFlow);
 export const saveEventrbite = https.onCall(SaveEvenbriteEvent);
+export const fetchEventbriteTickets = https.onCall(FetchEventbriteTickets);

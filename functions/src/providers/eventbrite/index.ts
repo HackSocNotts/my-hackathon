@@ -1,4 +1,5 @@
 import auth from './auth';
 import save from './save';
+import fetchTickets from './fetchTickets';
 
-export { auth, save };
+export { auth, save, fetchTickets };
