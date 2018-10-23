@@ -22,8 +22,15 @@ const save = async (data: any, context: CallableContext) => {
       logMessage({ issuer: user, message: 'Attempted to update Eventbrite details', type: Log.General});
     }
 
+    const token = (await db.doc(`users/${user.uid}`).get())
+      .data().eventbrite.token;
+
     await db.doc('settings/eventrbite')
-      .update(data);
+      .update({
+        ...data,
+        bearerToken: token,
+        attendees: [],
+      });
 
     return true;
   } catch (err) {
