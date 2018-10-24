@@ -9,11 +9,22 @@ import { connect } from 'react-redux';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { reduxForm, Field } from 'redux-form';
 import DashboardContainer from '../../Containers/Dashboard';
-import { authorizeEventbrite } from '../../Utlis/Eventbrite';
+import { authorizeEventbrite, save as saveEvent } from '../../Utlis/Eventbrite';
 import EventbriteEventsDropdown from './Fields/EventbriteEventsDropdown';
 import styles from './styles';
 
 class admin extends Component {
+  constructor(props) {
+    super(props);
+    this.save = this.save.bind(this);
+  }
+
+  save() {
+    const { form } = this.props;
+    const id = form.values.eventbriteEvent.value;
+    saveEvent(id);
+  }
+
   render() {
     const { events } = this.props;
 
@@ -48,7 +59,7 @@ class admin extends Component {
             </Button>
             )}
             {events.length && (
-            <Button onClick={console.log} size="small">
+            <Button onClick={this.save} size="small">
               Save
             </Button>
             )}
@@ -61,12 +72,14 @@ class admin extends Component {
 
 admin.propTypes = {
   events: PropTypes.array.isRequired,
+  form: PropTypes.object.isRequired,
   // classes: PropTypes.object.isRequired,
 };
 
 // eslint-disable-next-line
 const mapStateToProps = state => ({
   events: state.eventbrite.events,
+  form: state.form.selectEventbrite,
 });
 
 // eslint-disable-next-line
