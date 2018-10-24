@@ -15,8 +15,6 @@ const buildRequest = async () => {
     .get())
     .data();
 
-  console.log('eventbrite', eventbriteSettings);
-
   const { id, bearerToken, attendees } = eventbriteSettings;
 
   const method = `/events/${id}/attendees`;
