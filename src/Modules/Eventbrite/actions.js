@@ -2,9 +2,12 @@
  * Eventbrite Action Types
  */
 
-export const GET_EVENTS = 'GET_EVENTS';
-export const GET_EVENTS_SUCCESS = 'GET_EVENTS_SUCCESS';
-export const GET_EVENTS_FAILURE = 'GET_EVENTS_FAILURE';
+export const GET_EVENTS = '@@eventbrite/GET_EVENTS';
+export const GET_EVENTS_SUCCESS = '@@eventbrite/GET_EVENTS_SUCCESS';
+export const GET_EVENTS_FAILURE = '@@eventbrite/GET_EVENTS_FAILURE';
+export const GET_EVENT = '@@eventbrite/GET_EVENT';
+export const GET_EVENT_SUCCESS = '@@eventbrite/GET_EVENT_SUCCESS';
+export const GET_EVENT_FAILURE = '@@eventbrite/GET_EVENT_FAILURE';
 
 /**
 * Eventbrite Action Creators
