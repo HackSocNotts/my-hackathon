@@ -3,6 +3,9 @@ import {
   GET_EVENTS_FAILURE,
   GET_EVENTS_SUCCESS,
   GET_EVENTS,
+  GET_EVENT,
+  GET_EVENT_SUCCESS,
+  GET_EVENT_FAILURE,
 } from './actions';
 
 const reducer = (state = initalState, action) => {
@@ -21,6 +24,22 @@ const reducer = (state = initalState, action) => {
       return {
         ...state,
         events: [],
+        error: action.payload,
+      };
+
+    case GET_EVENT:
+      return state;
+
+    case GET_EVENT_SUCCESS:
+      return {
+        ...state,
+        event: action.payload,
+        error: null,
+      };
+
+    case GET_EVENT_FAILURE:
+      return {
+        ...state,
         error: action.payload,
       };
 
