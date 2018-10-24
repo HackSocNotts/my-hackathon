@@ -1,6 +1,7 @@
 import { CallableContext } from 'firebase-functions/lib/providers/https';
 import { auth, firestore } from 'firebase-admin';
 import { https } from 'firebase-functions';
+import setWebhook from './setWebhook';
 import logMessage, { LogType as Log } from '../../utils/log';
 
 const rp = require('request-promise-native');
@@ -20,12 +21,11 @@ const buildUrl = (id: string) => {
 };
 
 const save = async (id: string, context: CallableContext) => {
-  console.log(id)
   try {
     const user: auth.UserRecord = await auth().getUser(context.auth.uid);
 
     if (!user.customClaims['admin']) {
-      logMessage({ issuer: user, message: 'Attempted to update Eventbrite details', type: Log.General});
+      await logMessage({ issuer: user, message: 'Attempted to update Eventbrite details', type: Log.General});
     }
 
     const token = (await db.doc(`/users/${user.uid}`).get())
@@ -42,6 +42,8 @@ const save = async (id: string, context: CallableContext) => {
     };
 
     await document.set(documentData);
+
+    await setWebhook(id, token, context);
 
     return true;
   } catch (err) {
