@@ -3,10 +3,6 @@ import fetchTickets from './fetchTickets';
 
 const rp = require('request-promise-native');
 
-const db = firestore();
-
-const { HttpsError } = https;
-
 const orderPlaced = async (request: Request, response: Response) => {
   try {
 
