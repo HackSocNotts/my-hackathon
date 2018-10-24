@@ -8,11 +8,16 @@ const rp = require('request-promise-native');
 const db = firestore();
 
 const { HttpsError } = https;
-const baseUrl = 'https://www.eventbrite.com';
+const baseUrl = 'https://www.eventbriteapi.com/v3';
 
 const buildRequest = async () => {
-  const { id, bearerToken, attendees } = (await db.doc('settings/eventbrite')
-    .get()).data();
+  const eventbriteSettings = (await db.doc('/settings/eventbrite')
+    .get())
+    .data();
+
+  console.log('eventbrite', eventbriteSettings);
+
+  const { id, bearerToken, attendees } = eventbriteSettings;
 
   const method = `/events/${id}/attendees`;
 
@@ -21,7 +26,7 @@ const buildRequest = async () => {
   return { url, bearerToken, attendees };
 };
 
-const fetchTickets = async (data: null, context: CallableContext) => {
+const fetchTickets = async () => {
   try {
     const { url, bearerToken, attendees } = await (buildRequest());
     const attendeesData = await getAll(url, bearerToken, 'attendees');
