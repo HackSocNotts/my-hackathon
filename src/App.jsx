@@ -6,6 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import history from './Store/history';
 import RequireAuth from './Components/requireAuth';
 import RequireAdmin from './Components/requireAdmin';
+import RequireTicket from './Components/requireTicket';
 import LoginPage from './Pages/Login';
 import HomePage from './Pages/Home';
 import TeamPage from './Pages/Team';
@@ -25,7 +26,7 @@ class App extends Component {
         <ConnectedRouter history={history}>
           <Switch>
             <Route path="/" component={RequireAuth(true, false)(HomePage)} exact />
-            <Route path="/application" component={RequireAuth(true)(ApplicationPage)} />
+            <Route path="/application" component={RequireAuth(true)(RequireTicket()(ApplicationPage))} />
             <Route path="/team" component={RequireAuth(true)(TeamPage)} />
             <Route path="/admin" component={RequireAuth(true)(RequireAdmin()(AdminPage))} />
             <Route path="/account" component={RequireAuth()(AccountPage)} />
