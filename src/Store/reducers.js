@@ -5,6 +5,7 @@ import { reducer as form } from 'redux-form';
 import navigation from '../Modules/Navigation';
 import flash from '../Modules/Flash';
 import eventbrite from '../Modules/Eventbrite';
+import settings from '../Modules/Settings';
 
 const makeRootReducer = asyncReducers => combineReducers({
   // Add sync reducers here
@@ -14,6 +15,7 @@ const makeRootReducer = asyncReducers => combineReducers({
   navigation,
   flash,
   eventbrite,
+  settings,
   ...asyncReducers,
 });
 
