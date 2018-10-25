@@ -22,12 +22,12 @@ class home extends Component {
   }
 
   render() {
-    const { auth, eventbriteAttendee } = this.props;
+    const { auth, eventbriteAttendee, generalSettings: { eventbrite } } = this.props;
 
     return (
       <DashboardContainer>
-        { auth.isLoaded && (eventbriteAttendee === false) && <StandardCard />}
-        { eventbriteAttendee && <EventbriteCard />}
+        { auth.isLoaded && !eventbrite && <StandardCard />}
+        { eventbrite && <EventbriteCard />}
       </DashboardContainer>
     );
   }
@@ -41,15 +41,18 @@ home.propTypes = {
   auth: PropTypes.object,
   eventbriteAttendee: PropTypes.oneOf([PropTypes.object, PropTypes.bool]),
   fetchAttendee: PropTypes.func.isRequired,
+  generalSettings: PropTypes.object,
 };
 
 home.defaultProps = {
   auth: null,
   eventbriteAttendee: null,
+  generalSettings: null,
 };
 
 const mapStateToProps = state => ({
   eventbriteAttendee: state.eventbrite.attendee,
+  generalSettings: state.settings.general,
 });
 
 const mapDispatchToProps = dispatch => ({
