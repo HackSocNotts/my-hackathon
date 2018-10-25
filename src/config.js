@@ -92,7 +92,7 @@ const applicationStates = {
   /**
    * Applications are incomplete by default, and will remain as such until submitted
    */
-  incomplete: {
+  INCOMPLETE: {
     name: 'Incomplete',
     message: "You've not submitted your application yet.",
   },
@@ -100,7 +100,7 @@ const applicationStates = {
    * Submitted is once a user has submitted their application for review,
    * and no action has been taken on it
    */
-  submitted: {
+  SUBMITTED: {
     name: 'Submitted',
     message: 'Your application has been submitted and is under review.',
   },
@@ -108,14 +108,14 @@ const applicationStates = {
    * Accepted is the state of an application when it's been accepted to attend,
    * and the user has not confirmed/declined to attend
    */
-  accepted: {
+  ACCEPTED: {
     name: 'Accepted',
     message: 'Your application has been accepted.',
   },
   /**
    * Rejected is a final state, this is when a user has not been accepted
    */
-  rejected: {
+  REJECTED: {
     name: 'Rejected',
     message: "Unfortunatley, you've not been accepted to attend the hackathon.",
   },
@@ -123,14 +123,14 @@ const applicationStates = {
    * Waitlisted is when a user ahs been approved, but there isn't enough
    * space to guarentee them a position yet
    */
-  waitlisted: {
+  WAITLISTED: {
     name: 'Waitlested',
     message: "You're application has been accepted, but was recieved too late to guarantee attendance. We'll  let you know if a space frees up.",
   },
   /**
    * Confirmed is when a user says they'll attend after the application has been accepted
    */
-  confirmed: {
+  CONFIRMED: {
     name: 'Confirmed',
     message: "You've confirmed your attendace. We can't wait to see you at the Hackathon.",
   },
@@ -138,7 +138,7 @@ const applicationStates = {
    * Declined is a final state when a user withdraws their attendacnce after being accepted
    * or confirming attendance
    */
-  declined: {
+  DECLINED: {
     name: 'Declined',
     message: "You've withdrawen your application after beeing accepted to the Hackathon",
   },
@@ -154,14 +154,14 @@ const applicationStates = {
    * Withdrawen is a final state when the user withdraws their applicaiton before it's
    * been revieweed
    */
-  withdrawen: {
+  WITHDRAWEN: {
     name: 'Withdrawen',
     message: "You've witthdrawen your application from consideration.",
   },
   /**
    * Not applied is when you use Eventbrite to release tickets and the user hasn't applied
    */
-  notApplied: {
+  NOTAPPLIED: {
     name: 'Not apploed',
     message: 'You\'ve not got a ticket on Eventbrite yet.',
   },
