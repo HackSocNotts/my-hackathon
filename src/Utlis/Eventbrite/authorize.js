@@ -2,7 +2,7 @@ import { getFirebase } from 'react-redux-firebase';
 import { push } from 'connected-react-router';
 import store from '../../Store';
 import { eventbriteVars } from '../../config';
-import { getEvents, getEventsSuccess, getEvetnsFailure } from '../../Modules/Eventbrite';
+import { getEvents, getEventsSuccess, getEventsFailure } from '../../Modules/Eventbrite';
 
 const firebase = getFirebase();
 
@@ -43,7 +43,7 @@ const handleMessage = (event) => {
   firebase.functions().httpsCallable('authEventbrite')({ code })
     .then(events => dispatch(getEventsSuccess(events.data)))
     .then(dispatch(push('/admin')))
-    .catch(err => dispatch(getEvetnsFailure(err)))
+    .catch(err => dispatch(getEventsFailure(err)))
     .finally(() => window.removeEventListener('message', handleMessage));
 };
 
