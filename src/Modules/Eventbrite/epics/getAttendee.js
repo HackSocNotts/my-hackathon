@@ -2,11 +2,9 @@ import { collectionData } from 'rxfire/firestore';
 import { getFirebase } from 'react-redux-firebase';
 
 import { ofType } from 'redux-observable';
-import { of, throwError } from 'rxjs';
 import {
   map,
   switchMap,
-  catchError,
   take,
 } from 'rxjs/operators';
 
@@ -26,14 +24,15 @@ const getAttendeeEpic = (action$, state$) => action$.pipe(
     return collectionData(query, 'id');
   }),
   map((documents) => {
-    if (documents.length !== 1) {
-      return throwError('more than one document');
+    if (documents.length > 1) {
+      return getAttendeeFailure('More than one ticket');
     }
-    return documents[0];
+    if (documents.length < 1) {
+      return getAttendeeFailure('No ticket');
+    }
+    return getAttendeeSuccess(documents[0]);
   }),
   take(1),
-  map(document => getAttendeeSuccess(document)),
-  catchError(error => of(getAttendeeFailure(error.message))),
 );
 
 export default getAttendeeEpic;
