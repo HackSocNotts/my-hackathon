@@ -146,7 +146,7 @@ const applicationStates = {
    * Expired is a final statewhen a user fails to confirm/decline attendance befor the deadline
    * after being accepted
    */
-  expired: {
+  EXPIRED: {
     name: 'Expired',
     message: "You've failed to confirm your attendance in time after being accepted",
   },
@@ -162,7 +162,7 @@ const applicationStates = {
    * Not applied is when you use Eventbrite to release tickets and the user hasn't applied
    */
   NOTAPPLIED: {
-    name: 'Not apploed',
+    name: 'Not applied',
     message: 'You\'ve not got a ticket on Eventbrite yet.',
   },
 };
