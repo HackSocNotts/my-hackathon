@@ -158,6 +158,13 @@ const applicationStates = {
     name: 'Withdrawen',
     message: "You've witthdrawen your application from consideration.",
   },
+  /**
+   * Not applied is when you use Eventbrite to release tickets and the user hasn't applied
+   */
+  notApplied: {
+    name: 'Not apploed',
+    message: 'You\'ve not got a ticket on Eventbrite yet.',
+  },
 };
 
 const dashboardButtons = {
