@@ -53,9 +53,7 @@ class Application extends Component {
           <Typography variant="title" gutterBottom>
             Academic Information
           </Typography>
-          <FormControl className={classes.margin}>
-            <SchoolSearch profile={profile} />
-          </FormControl>
+          <Field name="school" component={SchoolSearch} />
           <FormControl className={classes.margin}>
             <InputLabel htmlFor="major">Major</InputLabel>
             <Input
