@@ -85,9 +85,7 @@ class Application extends Component {
           <Typography variant="title" gutterBottom>
             Demographic Information
           </Typography>
-          <FormControl className={classes.margin}>
-            <GenderDropdown profile={profile} />
-          </FormControl>
+          <Field name="gender" component={GenderDropdown} />
           <FormControl className={classes.margin}>
             <EthnicityDropdown profile={profile} />
           </FormControl>

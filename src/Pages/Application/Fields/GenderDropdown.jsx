@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import withStyles from '@material-ui/core/styles/withStyles';
+import FormControl from '@material-ui/core/FormControl';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -56,6 +57,10 @@ const styles = theme => ({
   },
   divider: {
     height: theme.spacing.unit * 2,
+  },
+  margin: {
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
   },
 });
 
@@ -117,7 +122,17 @@ const SingleValue = props => (
   </Typography>
 );
 
-const ValueContainer = props => <div className={props.selectProps.classes.valueContainer}>{props.children}</div>;
+const ValueContainer = props => (
+  <div
+    className={props.selectProps.classes.valueContainer}
+  >
+    {props.children}
+  </div>);
+
+ValueContainer.propTypes = {
+  children: PropTypes.node.isRequired,
+  selectProps: PropTypes.any.isRequired,
+};
 
 const Menu = props => (
   <Paper square className={props.selectProps.classes.paper} {...props.innerProps}>
@@ -137,7 +152,7 @@ const components = {
 
 class GenderDropdown extends Component {
   render() {
-    const { profile, classes, theme } = this.props;
+    const { input: { value, onChange }, classes, theme } = this.props;
 
     const selectStyles = {
       input: base => ({
@@ -157,13 +172,12 @@ class GenderDropdown extends Component {
     ];
 
     return (
-      <React.Fragment>
+      <FormControl className={classes.margin}>
         <CreatableSelect
           id="school"
           displayEmpty
           classes={classes}
           styles={selectStyles}
-          defaultValue={profile.myMlhData ? { label: profile.myMlhData.gender, value: profile.myMlhData.gender } : ''}
           options={options}
           components={components}
           isClearable
@@ -173,14 +187,16 @@ class GenderDropdown extends Component {
               shrink: true,
             },
           }}
+          value={value}
+          onChange={onChange}
         />
-      </React.Fragment>
+      </FormControl>
     );
   }
 }
 
 GenderDropdown.propTypes = {
-  profile: PropTypes.any.isRequired,
+  input: PropTypes.any.isRequired,
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
 };
