@@ -6,10 +6,12 @@ import { withFirebase } from 'react-redux-firebase';
 import { Field, reduxForm } from 'redux-form';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import DashboardContainer from '../../Containers/Dashboard';
 import * as Fields from './Fields';
 
 import { getApplication } from '../../Modules/Application';
+import { validate } from '../../Modules/Application/utils';
 
 import styles from './styles';
 
@@ -20,11 +22,17 @@ class Application extends Component {
   }
 
   render() {
-    const { classes, application } = this.props;
+    const {
+      classes,
+      application,
+      handleSubmit,
+      valid,
+      pristine,
+    } = this.props;
 
     return application.isLoaded === true ? (
       <DashboardContainer>
-        <form className={classes.container}>
+        <form className={classes.container} onSubmit={handleSubmit}>
           <Typography variant="title" gutterBottom>
             Personal Information
           </Typography>
@@ -57,9 +65,41 @@ class Application extends Component {
           <Typography variant="title" gutterBottom>
             Code of Conduct and Privacy
           </Typography>
-          <Field name="mlhCoC" component={Fields.MlhCodeOfConductCheckbox} />
-          <Field name="mlhPrivacy" component={Fields.MlhPrivacyPolicyCheckbox} />
-          <Field name="mlhMarketting" component={Fields.MlhMarkettingCheckbox} />
+          <Field
+            name="mlhCoC"
+            label="I have read and agree to the MLH Code of Conduct.*"
+            component={Fields.OptIn}
+          />
+          <Field
+            name="mlhPrivacy"
+            label="I agree to the MLH Privacy Policy.*"
+            component={Fields.OptIn}
+          />
+          <Field
+            name="mlhContest"
+            label="I agree to the MLH Contest Terms and Conditions.*"
+            component={Fields.OptIn}
+          />
+          <Field
+            name="mlhSharring"
+            label="I authorize you to share my application/registration information for event administration, ranking, MLH administration, pre- and post-event informational e-mails in-line with the MLH Privacy Policy."
+            component={Fields.OptIn}
+          />
+          <Field
+            name="mlhMarketting"
+            label="I want to recieve occasional messages about hackathons in-line with the MLH Privacy Policy."
+            component={Fields.OptIn}
+          />
+
+          <Button
+            type="submit"
+            variant="outlined"
+            color="primary"
+            className={classes.button}
+            disabled={!valid || pristine}
+          >
+            Submit
+          </Button>
         </form>
       </DashboardContainer>
     ) : (
@@ -71,10 +111,12 @@ class Application extends Component {
 }
 
 Application.propTypes = {
-  // profile: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   loadApplication: PropTypes.func.isRequired,
   application: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  valid: PropTypes.bool.isRequired,
+  pristine: PropTypes.bool.isRequired,
 };
 
 // eslint-disable-next-line
@@ -92,6 +134,8 @@ export default compose(
   reduxForm({
     form: 'application',
     destroyOnUnmount: false,
+    validate,
+    onSubmit: values => console.log('submitting', values),
   }),
   withStyles(styles, { withTheme: true }),
   connect(

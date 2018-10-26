@@ -6,28 +6,42 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 import styles from '../styles';
 
-class MlhMarketting extends Component {
+class OptIn extends Component {
   render() {
-    const { input } = this.props;
+    const {
+      input,
+      meta: { error, touched },
+      name,
+      label,
+    } = this.props;
     return (
       <FormGroup row>
         <FormControlLabel
-          control={<Checkbox value="mlhMarketting" {...input} />
+          control={<Checkbox value={name} {...input} />
           }
-          label="I want to recieve occasional messages about hackathons in-line with the MLH Privacy Policy."
+          label={label}
         />
+        {!!error && touched && (
+          <FormHelperText error>
+            {error}
+          </FormHelperText>
+        )}
       </FormGroup>
     );
   }
 }
 
-MlhMarketting.propTypes = {
+OptIn.propTypes = {
   input: PropTypes.any.isRequired,
+  meta: PropTypes.object.isRequired,
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
 };
 
 export default compose(
   withStyles(styles, { withTheme: true }),
-)(MlhMarketting);
+)(OptIn);

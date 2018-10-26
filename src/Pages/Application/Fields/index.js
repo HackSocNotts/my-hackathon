@@ -11,9 +11,7 @@ import LevelOfStudyField from './LevelOfStudy';
 import MajorField from './Major';
 import GraduationField from './Graduation';
 import SpecialNeedsField from './SpecialNeeds';
-import MlhCodeOfConductCheckbox from './MlhCodeOfConduct';
-import MlhPrivacyPolicyCheckbox from './MlhPrivacyPolicy';
-import MlhMarkettingCheckbox from './MlhMarketting';
+import OptIn from './OptIn';
 
 export {
   SchoolSearch,
@@ -32,4 +30,5 @@ export {
   MlhCodeOfConductCheckbox,
   MlhPrivacyPolicyCheckbox,
   MlhMarkettingCheckbox,
+  OptIn,
 };
