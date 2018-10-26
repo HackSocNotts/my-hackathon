@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 
 import styles from '../styles';
 import { applicationStates, dashboardButtons } from '../../../config';
+import { getApplication } from '../../../Modules/Application';
 
 class eventbrite extends Component {
   constructor(props) {
@@ -28,7 +29,7 @@ class eventbrite extends Component {
     }
 
     // States are NOTAPPLIED, INCOMPLETE, or SUBMITTED
-    return 'INCOMPLETE';
+    return application.status;
   }
 
   render() {
@@ -68,7 +69,8 @@ class eventbrite extends Component {
 
 eventbrite.propTypes = {
   eventbriteAttendee: PropTypes.oneOf([PropTypes.object, PropTypes.bool]),
-  // fetchAttendee: PropTypes.func.isRequired,
+  loadApplication: PropTypes.func.isRequired,
+  application: PropTypes.object.isRequired,
 };
 
 eventbrite.defaultProps = {
@@ -77,14 +79,15 @@ eventbrite.defaultProps = {
 
 const mapStateToProps = state => ({
   eventbriteAttendee: state.eventbrite.attendee,
+  application: state.application,
   generalSettings: state.settings.general,
 });
 
-// const mapDispatchToProps = dispatch => ({
-//   fetchAttendee: (() => dispatch(getAttendee())),
-// });
+const mapDispatchToProps = dispatch => ({
+  loadApplication: () => dispatch(getApplication()),
+});
 
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps/* , mapDispatchToProps */),
+  connect(mapStateToProps, mapDispatchToProps),
 )(eventbrite);
