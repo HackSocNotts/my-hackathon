@@ -23,6 +23,9 @@ import NameField from './Fields/Name';
 import EmailField from './Fields/Email';
 import PhoneField from './Fields/Phone';
 import BirthdateField from './Fields/Birthdate';
+import LevelOfStudyField from './Fields/LevelOfStudy';
+import MajorField from './Fields/Major';
+import GraduationField from './Fields/Graduation';
 
 import { getApplication } from '../../Modules/Application';
 
@@ -54,33 +57,9 @@ class Application extends Component {
             Academic Information
           </Typography>
           <Field name="school" component={SchoolSearch} />
-          <FormControl className={classes.margin}>
-            <InputLabel htmlFor="major">Major</InputLabel>
-            <Input
-              id="major"
-              placeholder="What is your major?"
-              defaultValue={profile.myMlhData
-                ? profile.myMlhData.major
-                : ''}
-            />
-          </FormControl>
-          <FormControl className={classes.margin}>
-            <InputLabel htmlFor="level_of_study">Level of Study</InputLabel>
-            <Input
-              id="level_of_study"
-              placeholder="What is your most current level of study?"
-              defaultValue={profile.myMlhData
-                ? profile.myMlhData.level_of_study
-                : ''}
-            />
-          </FormControl>
-          <FormControl className={classes.margin}>
-            <InputLabel htmlFor="graduation">Graduation Year</InputLabel>
-            <Input
-              id="graduation"
-              placeholder="What is your graduation year?"
-            />
-          </FormControl>
+          <Field name="major" component={MajorField} />
+          <Field name="levelOfStudy" component={LevelOfStudyField} />
+          <Field name="graduation" component={GraduationField} />
 
           <Typography variant="title" gutterBottom>
             Demographic Information
