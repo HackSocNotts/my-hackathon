@@ -5,10 +5,6 @@ import { connect } from 'react-redux';
 import { withFirebase } from 'react-redux-firebase';
 import { Field, reduxForm } from 'redux-form';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -26,6 +22,7 @@ import BirthdateField from './Fields/Birthdate';
 import LevelOfStudyField from './Fields/LevelOfStudy';
 import MajorField from './Fields/Major';
 import GraduationField from './Fields/Graduation';
+import SpecialNeedsField from './Fields/SpecialNeeds';
 
 import { getApplication } from '../../Modules/Application';
 
@@ -38,9 +35,7 @@ class Application extends Component {
   }
 
   render() {
-    const { classes, application, profile } = this.props;
-
-    const { application: fields } = application;
+    const { classes, application } = this.props;
 
     return application.isLoaded === true ? (
       <DashboardContainer>
@@ -72,19 +67,7 @@ class Application extends Component {
           </Typography>
           <Field name="dietaryRestrictions" component={DietaryDropdown} />
           <Field name="shirtSize" component={ShirtSizeDropdown} />
-          <FormControl className={classes.margin}>
-            <InputLabel htmlFor="special_needs">Special Needs</InputLabel>
-            <Input
-              id="special_needs"
-              placeholder="Do you have any special needs?"
-              defaultValue={profile.myMlhData
-                ? profile.myMlhData.special_needs
-                : ''}
-              multiline
-              rows={2}
-              rowsMax={5}
-            />
-          </FormControl>
+          <Field name="specialNeeds" component={SpecialNeedsField} />
 
           <Typography variant="title" gutterBottom>
             Code of Conduct and Privacy
@@ -121,7 +104,7 @@ class Application extends Component {
 }
 
 Application.propTypes = {
-  profile: PropTypes.object.isRequired,
+  // profile: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   loadApplication: PropTypes.func.isRequired,
   application: PropTypes.object.isRequired,
