@@ -93,9 +93,7 @@ class Application extends Component {
           <Typography variant="title" gutterBottom>
             Additional Information
           </Typography>
-          <FormControl className={classes.margin}>
-            <DietaryDropdown profile={profile} />
-          </FormControl>
+          <Field name="dietary_restrictions" component={DietaryDropdown} />
           <FormControl className={classes.margin}>
             <ShirtSizeDropdown profile={profile} />
           </FormControl>
