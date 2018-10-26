@@ -5,9 +5,6 @@ import { connect } from 'react-redux';
 import { withFirebase } from 'react-redux-firebase';
 import { Field, reduxForm } from 'redux-form';
 import withStyles from '@material-ui/core/styles/withStyles';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-import Checkbox from '@material-ui/core/Checkbox';
 import Typography from '@material-ui/core/Typography';
 import DashboardContainer from '../../Containers/Dashboard';
 import SchoolSearch from './Fields/SchoolSearch';
@@ -23,6 +20,9 @@ import LevelOfStudyField from './Fields/LevelOfStudy';
 import MajorField from './Fields/Major';
 import GraduationField from './Fields/Graduation';
 import SpecialNeedsField from './Fields/SpecialNeeds';
+import MlhCodeOfConductCheckbox from './Fields/MlhCodeOfConduct';
+import MlhPrivacyPolicyCheckbox from './Fields/MlhPrivacyPolicy';
+import MlHMarkettingCheckbox from './Fields/MlhMarketting';
 
 import { getApplication } from '../../Modules/Application';
 
@@ -72,27 +72,9 @@ class Application extends Component {
           <Typography variant="title" gutterBottom>
             Code of Conduct and Privacy
           </Typography>
-          <FormGroup row>
-            <FormControlLabel
-              control={<Checkbox value="mlhCoC" />
-              }
-              label="I have read and agree to the MLH Code of Conduct.*"
-            />
-          </FormGroup>
-          <FormGroup row>
-            <FormControlLabel
-              control={<Checkbox value="mlhPrivac" />
-              }
-              label="I authorize you to share my application/registration information for event administration, ranking, MLH administration, pre- and post-event informational e-mails in-line with the MLH Privacy Policy. I further I agree to the terms of both the MLH Contest Terms and Conditions and the MLH Privacy Policy.*"
-            />
-          </FormGroup>
-          <FormGroup row>
-            <FormControlLabel
-              control={<Checkbox value="mlhMarketting" />
-              }
-              label="I want to recieve occasional messages about hackathons in-line with the MLH Privacy Policy."
-            />
-          </FormGroup>
+          <Field name="mlhCoC" component={MlhCodeOfConductCheckbox} />
+          <Field name="mlhPrivacy" component={MlhPrivacyPolicyCheckbox} />
+          <Field name="mlhMarketting" component={MlHMarkettingCheckbox} />
         </form>
       </DashboardContainer>
     ) : (
