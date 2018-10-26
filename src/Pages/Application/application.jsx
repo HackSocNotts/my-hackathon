@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withFirebase } from 'react-redux-firebase';
+import { Field, reduxForm } from 'redux-form';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -18,58 +19,36 @@ import GenderDropdown from './Fields/GenderDropdown';
 import EthnicityDropdown from './Fields/EthnicityDropdown';
 import DietaryDropdown from './Fields/DietaryDropdown';
 import ShirtSizeDropdown from './Fields/ShitSizeDropdown';
+import NameField from './Fields/Name';
+import EmailField from './Fields/Email';
+import PhoneField from './Fields/Phone';
+import BirthdateField from './Fields/Birthdate';
+
+import { getApplication } from '../../Modules/Application';
 
 import styles from './styles';
 
-class application extends Component {
-  render() {
-    const { classes, profile } = this.props;
+class Application extends Component {
+  componentWillMount() {
+    const { loadApplication } = this.props;
+    loadApplication();
+  }
 
-    return profile.isLoaded === true ? (
+  render() {
+    const { classes, application, profile } = this.props;
+
+    const { application: fields } = application;
+
+    return application.isLoaded === true ? (
       <DashboardContainer>
         <form className={classes.container}>
           <Typography variant="title" gutterBottom>
             Personal Information
           </Typography>
-          <FormControl className={classes.margin}>
-            <InputLabel htmlFor="name">Name</InputLabel>
-            <Input
-              id="name"
-              defaultValue={profile.myMlhData
-                ? `${profile.myMlhData.first_name} ${profile.myMlhData.last_name}`
-                : profile.displayName}
-            />
-            <FormHelperText>
-              Your full legal name
-            </FormHelperText>
-          </FormControl>
-          <FormControl className={classes.margin}>
-            <InputLabel htmlFor="email">Email</InputLabel>
-            <Input
-              id="email"
-              defaultValue={profile.myMlhData
-                ? profile.myMlhData.email
-                : profile.email}
-            />
-          </FormControl>
-          <FormControl className={classes.margin}>
-            <InputLabel htmlFor="phone">Phone Number</InputLabel>
-            <Input
-              id="phone"
-              defaultValue={profile.myMlhData
-                ? profile.myMlhData.phone_number
-                : ''}
-            />
-          </FormControl>
-          <FormControl className={classes.margin}>
-            <InputLabel htmlFor="birthdate">Birth Date</InputLabel>
-            <Input
-              id="birthdate"
-              defaultValue={profile.myMlhData
-                ? profile.myMlhData.date_of_birth
-                : ''}
-            />
-          </FormControl>
+          <Field name="name" component={NameField} />
+          <Field name="email" component={EmailField} />
+          <Field name="phone" component={PhoneField} />
+          <Field name="birthdate" component={BirthdateField} />
 
           <Typography variant="title" gutterBottom>
             Academic Information
@@ -172,27 +151,34 @@ class application extends Component {
   }
 }
 
-application.propTypes = {
+Application.propTypes = {
   profile: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired,
-  firebase: PropTypes.any.isRequired,
   classes: PropTypes.object.isRequired,
+  loadApplication: PropTypes.func.isRequired,
+  application: PropTypes.object.isRequired,
 };
 
 // eslint-disable-next-line
-const mapStateToProps = state => ({ });
+const mapStateToProps = state => ({
+  application: state.application,
+});
 
 // eslint-disable-next-line
-const mapDispatchToProps = state => ({ });
+const mapDispatchToProps = dispatch => ({ 
+  loadApplication: () => dispatch(getApplication()),
+});
 
 export default compose(
   withFirebase,
+  reduxForm({
+    form: 'application',
+    destroyOnUnmount: false,
+  }),
   withStyles(styles, { withTheme: true }),
   connect(
-    ({ firebase: { profile, auth } }) => ({
+    ({ firebase: { profile } }) => ({
       profile,
-      auth,
     }),
   ),
   connect(mapStateToProps, mapDispatchToProps),
-)(application);
+)(Application);
