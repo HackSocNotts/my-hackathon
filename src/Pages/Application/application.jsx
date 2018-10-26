@@ -13,6 +13,12 @@ import * as Fields from './Fields';
 import { getApplication } from '../../Modules/Application';
 import { validate } from '../../Modules/Application/utils';
 
+import shirtSizes from '../../Data/shirtSizes';
+import schools from '../../Data/schools';
+import ethnicities from '../../Data/ethnicities';
+import genders from '../../Data/genders';
+import dietaryRequirements from '../../Data/dietaryRequirements';
+
 import styles from './styles';
 
 class Application extends Component {
@@ -61,7 +67,13 @@ class Application extends Component {
           <Typography variant="title" gutterBottom>
             Academic Information
           </Typography>
-          <Field name="school" component={Fields.SchoolSearch} />
+          <Field
+            name="school"
+            component={Fields.CreatableDropdown}
+            placeholder="Search for your school"
+            label="School"
+            options={schools.map(school => ({ label: school, value: school }))}
+          />
           <Field
             name="major"
             label="Major"
@@ -81,14 +93,41 @@ class Application extends Component {
           <Typography variant="title" gutterBottom>
             Demographic Information
           </Typography>
-          <Field name="gender" component={Fields.GenderDropdown} />
-          <Field name="ethnicity" component={Fields.EthnicityDropdown} />
+          <Field
+            name="gender"
+            label="Gender"
+            placeholder="Please select an option"
+            options={genders.map(gender => ({ label: gender, value: gender }))}
+            component={Fields.CreatableDropdown}
+          />
+          <Field
+            name="ethnicity"
+            placeholder="What is your race/ethnicity?"
+            label="Race/Ethnicity"
+            options={ethnicities.map(ethnicity => ({ label: ethnicity, value: ethnicity }))}
+            component={Fields.CreatableDropdown}
+          />
 
           <Typography variant="title" gutterBottom>
             Additional Information
           </Typography>
-          <Field name="dietaryRestrictions" component={Fields.DietaryDropdown} />
-          <Field name="shirtSize" component={Fields.ShirtSizeDropdown} />
+          <Field
+            name="dietaryRestrictions"
+            placeholder="Do you have any dietary restrictions?"
+            label="Dietary Restrictions"
+            options={dietaryRequirements.map(requirement => ({
+              label: requirement,
+              value: requirement,
+            }))}
+            component={Fields.CreatableDropdown}
+          />
+          <Field
+            name="shirtSize"
+            label="Shirt Size"
+            placeholder="Select your shirt size."
+            options={shirtSizes.map(option => ({ label: option, value: option }))}
+            component={Fields.FixedOptionsDropdown}
+          />
           <Field name="specialNeeds" component={Fields.SpecialNeedsField} />
 
           <Typography variant="title" gutterBottom>

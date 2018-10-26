@@ -7,6 +7,9 @@ const styles = theme => ({
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit,
   },
+  button: {
+    margin: theme.spacing.unit,
+  },
 });
 
 // eslint-disable-next-line
