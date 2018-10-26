@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import withStyles from '@material-ui/core/styles/withStyles';
+import FormControl from '@material-ui/core/FormControl';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -56,6 +57,10 @@ const styles = theme => ({
   },
   divider: {
     height: theme.spacing.unit * 2,
+  },
+  margin: {
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
   },
 });
 
@@ -146,7 +151,7 @@ const components = {
 
 class EthnicityDropdown extends Component {
   render() {
-    const { classes, theme } = this.props;
+    const { input: { value, onChange }, classes, theme } = this.props;
 
     const selectStyles = {
       input: base => ({
@@ -169,7 +174,7 @@ class EthnicityDropdown extends Component {
     ];
 
     return (
-      <React.Fragment>
+      <FormControl className={classes.margin}>
         <CreatableSelect
           id="school"
           displayEmpty
@@ -185,13 +190,16 @@ class EthnicityDropdown extends Component {
               shrink: true,
             },
           }}
+          value={value}
+          onChange={onChange}
         />
-      </React.Fragment>
+      </FormControl>
     );
   }
 }
 
 EthnicityDropdown.propTypes = {
+  input: PropTypes.any.isRequired,
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
 };
