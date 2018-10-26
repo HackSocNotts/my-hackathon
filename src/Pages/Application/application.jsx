@@ -7,22 +7,7 @@ import { Field, reduxForm } from 'redux-form';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import DashboardContainer from '../../Containers/Dashboard';
-import SchoolSearch from './Fields/SchoolSearch';
-import GenderDropdown from './Fields/GenderDropdown';
-import EthnicityDropdown from './Fields/EthnicityDropdown';
-import DietaryDropdown from './Fields/DietaryDropdown';
-import ShirtSizeDropdown from './Fields/ShitSizeDropdown';
-import NameField from './Fields/Name';
-import EmailField from './Fields/Email';
-import PhoneField from './Fields/Phone';
-import BirthdateField from './Fields/Birthdate';
-import LevelOfStudyField from './Fields/LevelOfStudy';
-import MajorField from './Fields/Major';
-import GraduationField from './Fields/Graduation';
-import SpecialNeedsField from './Fields/SpecialNeeds';
-import MlhCodeOfConductCheckbox from './Fields/MlhCodeOfConduct';
-import MlhPrivacyPolicyCheckbox from './Fields/MlhPrivacyPolicy';
-import MlHMarkettingCheckbox from './Fields/MlhMarketting';
+import * as Fields from './Fields';
 
 import { getApplication } from '../../Modules/Application';
 
@@ -43,38 +28,38 @@ class Application extends Component {
           <Typography variant="title" gutterBottom>
             Personal Information
           </Typography>
-          <Field name="name" component={NameField} />
-          <Field name="email" component={EmailField} />
-          <Field name="phone" component={PhoneField} />
-          <Field name="birthdate" component={BirthdateField} />
+          <Field name="name" component={Fields.NameField} />
+          <Field name="email" component={Fields.EmailField} />
+          <Field name="phone" component={Fields.PhoneField} />
+          <Field name="birthdate" component={Fields.BirthdateField} />
 
           <Typography variant="title" gutterBottom>
             Academic Information
           </Typography>
-          <Field name="school" component={SchoolSearch} />
-          <Field name="major" component={MajorField} />
-          <Field name="levelOfStudy" component={LevelOfStudyField} />
-          <Field name="graduation" component={GraduationField} />
+          <Field name="school" component={Fields.SchoolSearch} />
+          <Field name="major" component={Fields.MajorField} />
+          <Field name="levelOfStudy" component={Fields.LevelOfStudyField} />
+          <Field name="graduation" component={Fields.GraduationField} />
 
           <Typography variant="title" gutterBottom>
             Demographic Information
           </Typography>
-          <Field name="gender" component={GenderDropdown} />
-          <Field name="ethnicity" component={EthnicityDropdown} />
+          <Field name="gender" component={Fields.GenderDropdown} />
+          <Field name="ethnicity" component={Fields.EthnicityDropdown} />
 
           <Typography variant="title" gutterBottom>
             Additional Information
           </Typography>
-          <Field name="dietaryRestrictions" component={DietaryDropdown} />
-          <Field name="shirtSize" component={ShirtSizeDropdown} />
-          <Field name="specialNeeds" component={SpecialNeedsField} />
+          <Field name="dietaryRestrictions" component={Fields.DietaryDropdown} />
+          <Field name="shirtSize" component={Fields.ShirtSizeDropdown} />
+          <Field name="specialNeeds" component={Fields.SpecialNeedsField} />
 
           <Typography variant="title" gutterBottom>
             Code of Conduct and Privacy
           </Typography>
-          <Field name="mlhCoC" component={MlhCodeOfConductCheckbox} />
-          <Field name="mlhPrivacy" component={MlhPrivacyPolicyCheckbox} />
-          <Field name="mlhMarketting" component={MlHMarkettingCheckbox} />
+          <Field name="mlhCoC" component={Fields.MlhCodeOfConductCheckbox} />
+          <Field name="mlhPrivacy" component={Fields.MlhPrivacyPolicyCheckbox} />
+          <Field name="mlhMarketting" component={Fields.MlhMarkettingCheckbox} />
         </form>
       </DashboardContainer>
     ) : (
