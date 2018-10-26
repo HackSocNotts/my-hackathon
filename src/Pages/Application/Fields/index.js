@@ -12,6 +12,7 @@ import MajorField from './Major';
 import GraduationField from './Graduation';
 import SpecialNeedsField from './SpecialNeeds';
 import OptIn from './OptIn';
+import TextField from './Text';
 
 export {
   SchoolSearch,
@@ -27,8 +28,6 @@ export {
   MajorField,
   GraduationField,
   SpecialNeedsField,
-  MlhCodeOfConductCheckbox,
-  MlhPrivacyPolicyCheckbox,
-  MlhMarkettingCheckbox,
   OptIn,
+  TextField,
 };

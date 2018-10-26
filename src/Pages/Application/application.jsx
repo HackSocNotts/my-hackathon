@@ -36,18 +36,47 @@ class Application extends Component {
           <Typography variant="title" gutterBottom>
             Personal Information
           </Typography>
-          <Field name="name" component={Fields.NameField} />
-          <Field name="email" component={Fields.EmailField} />
-          <Field name="phone" component={Fields.PhoneField} />
-          <Field name="birthdate" component={Fields.BirthdateField} />
+          <Field
+            name="name"
+            label="Name"
+            helpText="Your full legal name"
+            component={Fields.TextField}
+          />
+          <Field
+            name="email"
+            label="Email"
+            component={Fields.TextField}
+          />
+          <Field
+            name="phone"
+            label="Phone Number"
+            component={Fields.TextField}
+          />
+          <Field
+            name="birthdate"
+            label="Birth Date"
+            component={Fields.TextField}
+          />
 
           <Typography variant="title" gutterBottom>
             Academic Information
           </Typography>
           <Field name="school" component={Fields.SchoolSearch} />
-          <Field name="major" component={Fields.MajorField} />
-          <Field name="levelOfStudy" component={Fields.LevelOfStudyField} />
-          <Field name="graduation" component={Fields.GraduationField} />
+          <Field
+            name="major"
+            label="Major"
+            component={Fields.TextField}
+          />
+          <Field
+            name="levelOfStudy"
+            label="Level of Study"
+            component={Fields.TextField}
+          />
+          <Field
+            name="graduation"
+            label="Graduation Year"
+            component={Fields.TextField}
+          />
 
           <Typography variant="title" gutterBottom>
             Demographic Information
