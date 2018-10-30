@@ -14,14 +14,14 @@ class OptIn extends Component {
   render() {
     const {
       input,
+      input: { name },
       meta: { error, touched },
-      name,
       label,
     } = this.props;
     return (
       <FormGroup row>
         <FormControlLabel
-          control={<Checkbox value={name} {...input} />
+          control={<Checkbox name={name} value={name} {...input} />
           }
           label={label}
         />
@@ -38,7 +38,6 @@ class OptIn extends Component {
 OptIn.propTypes = {
   input: PropTypes.any.isRequired,
   meta: PropTypes.object.isRequired,
-  name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
 };
 

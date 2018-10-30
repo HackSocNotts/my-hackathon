@@ -17,6 +17,7 @@ class SpecialNeeds extends Component {
         <InputLabel htmlFor="special_needs">Special Needs</InputLabel>
         <Input
           id="special_needs"
+          name="special_needs"
           placeholder="Do you have any special needs?"
           multiline
           rows={2}

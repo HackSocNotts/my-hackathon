@@ -14,8 +14,9 @@ class Text extends Component {
   render() {
     const {
       classes,
-      input, meta: { error, touched },
-      name,
+      input,
+      input: { name },
+      meta: { error, touched },
       label,
       helpText,
     } = this.props;
@@ -25,6 +26,7 @@ class Text extends Component {
           {label}
         </InputLabel>
         <Input
+          name={name}
           id={name}
           {...input}
           error={!!error && touched}
@@ -47,7 +49,6 @@ Text.propTypes = {
   classes: PropTypes.object.isRequired,
   input: PropTypes.any.isRequired,
   meta: PropTypes.object.isRequired,
-  name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string,
 };
