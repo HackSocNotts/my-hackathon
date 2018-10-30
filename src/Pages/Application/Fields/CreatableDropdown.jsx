@@ -10,9 +10,15 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import { emphasize } from '@material-ui/core/styles/colorManipulator';
 
-import CreatableSelect from 'react-select/lib/Creatable';
+import AsyncCreatableSelect from 'react-select/lib/AsyncCreatable';
 
 /* eslint-disable react/destructuring-assignment */
+
+const loadOptions = options => input => new Promise((resolve) => {
+  const newOptions = options.filter(option => option.value.includes(input))
+    .slice(0, 100);
+  return resolve(newOptions);
+});
 
 const styles = theme => ({
   root: {
@@ -183,12 +189,18 @@ class CreatableDropdown extends Component {
 
     return (
       <FormControl className={classes.margin}>
-        <CreatableSelect
+        <AsyncCreatableSelect
           id={name}
           displayEmpty
           classes={classes}
           styles={selectStyles}
-          options={options}
+          defaultOptions={options.length > 100 ? [
+            {
+              value: null,
+              label: 'Start typing...',
+            },
+          ] : options}
+          loadOptions={loadOptions(options)}
           components={components}
           isClearable
           placeholder={placeholder}
