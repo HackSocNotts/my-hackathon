@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import FormControl from '@material-ui/core/FormControl';
 import Typography from '@material-ui/core/Typography';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
@@ -153,13 +154,14 @@ const components = {
 class FixedOptionsDropdown extends Component {
   render() {
     const {
-      input: { value, onChange },
+      input: { value, onChange, name },
+      meta: { error, touched },
       classes,
       theme,
       options,
       placeholder,
       label,
-      name,
+      helpText,
     } = this.props;
 
     const selectStyles = {
@@ -191,7 +193,17 @@ class FixedOptionsDropdown extends Component {
           }}
           value={value}
           onChange={onChange}
+          error={!!error && touched}
         />
+        {!!helpText && (
+        <FormHelperText>
+          {helpText}
+        </FormHelperText>)}
+        {!!error && touched && (
+          <FormHelperText error>
+            {error}
+          </FormHelperText>
+        )}
       </FormControl>
     );
   }
@@ -199,6 +211,7 @@ class FixedOptionsDropdown extends Component {
 
 FixedOptionsDropdown.propTypes = {
   input: PropTypes.any.isRequired,
+  meta: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   options: PropTypes.arrayOf(PropTypes.shape({
@@ -207,7 +220,11 @@ FixedOptionsDropdown.propTypes = {
   })).isRequired,
   placeholder: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  helpText: PropTypes.string,
+};
+
+FixedOptionsDropdown.defaultProps = {
+  helpText: null,
 };
 
 export default withStyles(styles, { withTheme: true })(FixedOptionsDropdown);
