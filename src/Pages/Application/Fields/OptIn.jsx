@@ -13,15 +13,14 @@ import styles from '../styles';
 class OptIn extends Component {
   render() {
     const {
-      input,
-      input: { name },
+      input: { name, value, ...inputProps },
       meta: { error, touched },
       label,
     } = this.props;
     return (
       <FormGroup row>
         <FormControlLabel
-          control={<Checkbox name={name} value={name} {...input} />
+          control={<Checkbox name={name} value={name} checked={!!value} {...inputProps} />
           }
           label={label}
         />
