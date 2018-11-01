@@ -6,7 +6,7 @@ const { HttpsError } = https;
 
 const assignClaim = (issuer: auth.UserRecord, target: auth.UserRecord, claim: any) => {
   if (!issuer.customClaims || !issuer.customClaims['admin']) {
-    return logMessage(issuer, target, `Attempted to assign: ${JSON.stringify(claim)}`, LogType.ClaimAssignment)
+    return logMessage({ issuer, target, message: `Attempted to assign: ${JSON.stringify(claim)}`, type: LogType.ClaimAssignment })
       .then(() => {
         throw new HttpsError('permission-denied', 'Issuer not an admin'); 
       })
@@ -16,7 +16,7 @@ const assignClaim = (issuer: auth.UserRecord, target: auth.UserRecord, claim: an
       });
   }
   return auth().setCustomUserClaims(target.uid, claim)
-    .then(() => logMessage(issuer, target, `Assign: ${JSON.stringify(claim)}`, LogType.ClaimAssignment))
+    .then(() => logMessage({ issuer, target, message: `Assign: ${JSON.stringify(claim)}`, type: LogType.ClaimAssignment }))
     .then(() => ({ data: { success: true } }))
     .catch(err => {
       console.error(err);

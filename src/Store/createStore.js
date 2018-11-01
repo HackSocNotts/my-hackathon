@@ -5,13 +5,17 @@ import { reduxFirestore } from 'redux-firestore';
 import firebase from 'firebase/app';
 import { routerMiddleware, connectRouter } from 'connected-react-router';
 import createReduxWaitForMiddleware from 'redux-wait-for-action';
+import { createEpicMiddleware } from 'redux-observable';
 import makeRootReducer from './reducers';
 import history from './history';
+import rootEpic from './epics';
 import { firebase as fbConfig, reduxFirebase as rrfConfig } from '../config';
 import { version } from '../../package.json';
 import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/functions';
+
+const epicMiddleware = createEpicMiddleware();
 
 export default (initialState = {}) => {
   const { devToolsExtension } = window;
@@ -28,6 +32,7 @@ export default (initialState = {}) => {
     thunk.withExtraArgument(getFirebase),
     routerMiddleware(history),
     createReduxWaitForMiddleware(),
+    epicMiddleware,
     // This is where you add other middleware like redux-observable
   ];
 
@@ -40,9 +45,12 @@ export default (initialState = {}) => {
   }
 
   // Initialize Firebase
-  firebase.initializeApp(fbConfig);
+  const app = firebase.initializeApp(fbConfig);
   firebase.functions();
   firebase.auth();
+  if (process.env.REACT_APP_LOCAL_FUNCTIONS) {
+    app.functions().useFunctionsEmulator('http://localhost:5000');
+  }
   const firestore = firebase.firestore();
   firestore.settings({ timestampsInSnapshots: true });
 
@@ -60,6 +68,7 @@ export default (initialState = {}) => {
     ),
   );
   store.asyncReducers = {};
+  epicMiddleware.run(rootEpic);
 
   if (module.hot) {
     module.hot.accept('./reducers', () => {

@@ -8,11 +8,12 @@ const db = firestore();
 const { HttpsError } = https;
 const baseUrl = 'https://my.mlh.io';
 
-const buildUrl = (code: string) => {
+const buildUrl = (data: LoginRequest) => {
   const method = '/oauth/token';
   const appId: string = config().my_mlh.app_id;
   const secret: string = config().my_mlh.secret;
-  const redirect_uri: string = 'http://localhost:3000/_auth/mlh';
+  const redirect_uri: string = data.uri;
+  const code: string = data.code;
 
   const url = `${baseUrl}${method}?client_id=${appId}&client_secret=${secret}&code=${code}&redirect_uri=${redirect_uri}&grant_type=authorization_code`;
   return url;
@@ -53,7 +54,7 @@ const setUpUser = (data: myMlhResponse) => auth().createUser({
   .then(uid => updateUser(uid, data))
   .then(uid => auth().createCustomToken(uid));
 
-const login = async (data: string, context: CallableContext) => {
+const login = async (data: LoginRequest, context: CallableContext) => {
   const url = buildUrl(data);
   const options = {
     method: 'POST',
@@ -81,6 +82,11 @@ const login = async (data: string, context: CallableContext) => {
 };
 
 export default login;
+
+interface LoginRequest {
+  code: string;
+  uri: string;
+}
 
 interface myMlhResponse {
   id: number;

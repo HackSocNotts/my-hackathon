@@ -6,6 +6,9 @@ import './index.css';
 import App from './App';
 import store from './Store';
 import registerServiceWorker from './registerServiceWorker';
+import authNavigationSync from './Utlis/AuthNavigation/sync';
+import { getEvents } from './Modules/Eventbrite';
+import { getGeneralSettings } from './Modules/Settings';
 import 'typeface-roboto';
 
 const render = (Component) => {
@@ -18,4 +21,7 @@ const render = (Component) => {
 };
 
 render(App);
+authNavigationSync();
+store.dispatch(getEvents());
+store.dispatch(getGeneralSettings());
 registerServiceWorker();

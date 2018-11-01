@@ -1,18 +1,19 @@
-import { createMuiTheme } from '@material-ui/core/styles';
-import green from '@material-ui/core/colors/green';
-import blueGrey from '@material-ui/core/colors/blueGrey';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 
 const theme = createMuiTheme({
-  pallete: {
+  palette: {
     secondary: {
-      main: green.A700,
+      light: '#80e1fb',
+      main: '#61DAFB',
+      dark: '#4398af',
     },
     primary: {
-      light: blueGrey[300],
-      main: blueGrey[500],
-      dark: blueGrey[700],
+      light: '##41444c',
+      main: '#282c34',
+      dark: '#20232a',
+      contrastText: '#fff',
     },
-    type: 'dark',
+    type: 'light',
   },
 });
 

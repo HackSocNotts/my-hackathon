@@ -1,22 +1,50 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import DashboardContainer from '../../Containers/Dashboard';
+import { getApplication } from '../../Modules/Application';
+import ApplicationFrom from './form';
 
-import styles from './styles';
+class Application extends Component {
+  constructor(props) {
+    super(props);
+    const { loadApplication } = props;
+    loadApplication();
+  }
 
-class application extends Component {
   render() {
-    return (
+    const {
+      application,
+    } = this.props;
+
+    return application.isLoaded === true ? (
       <DashboardContainer>
-        Application works
+        <ApplicationFrom />
+      </DashboardContainer>
+    ) : (
+      <DashboardContainer>
+        Loading...
       </DashboardContainer>
     );
   }
 }
 
-application.proptTypes = {
-  classes: PropTypes.object.isRequired,
+Application.propTypes = {
+  loadApplication: PropTypes.func.isRequired,
+  application: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(application);
+// eslint-disable-next-line
+const mapStateToProps = state => ({
+  application: state.application,
+});
+
+// eslint-disable-next-line
+const mapDispatchToProps = dispatch => ({ 
+  loadApplication: () => dispatch(getApplication()),
+});
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+)(Application);

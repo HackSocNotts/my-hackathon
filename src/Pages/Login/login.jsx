@@ -107,7 +107,7 @@ class login extends Component {
 
     return (
       <MinimalContainer>
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src={logo} alt="logo" />
         <Typography variant="headline" gutterBottom>
           Welcome to&nbsp;
           {siteVars.hackathonName}

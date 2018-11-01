@@ -4,6 +4,9 @@ import { firestoreReducer as firestore } from 'redux-firestore';
 import { reducer as form } from 'redux-form';
 import navigation from '../Modules/Navigation';
 import flash from '../Modules/Flash';
+import eventbrite from '../Modules/Eventbrite';
+import settings from '../Modules/Settings';
+import application from '../Modules/Application';
 
 const makeRootReducer = asyncReducers => combineReducers({
   // Add sync reducers here
@@ -12,6 +15,9 @@ const makeRootReducer = asyncReducers => combineReducers({
   form,
   navigation,
   flash,
+  eventbrite,
+  settings,
+  application,
   ...asyncReducers,
 });
 
