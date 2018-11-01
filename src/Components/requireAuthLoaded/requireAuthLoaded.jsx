@@ -9,7 +9,7 @@ const requireAuthLoaded = (NestedComponent) => {
       return (
         <Fragment>
           {isLoaded && <NestedComponent />}
-          {!isLoaded && 'Lodaing...'}
+          {!isLoaded && 'Loading...'}
         </Fragment>
       );
     }
