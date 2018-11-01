@@ -1,16 +1,17 @@
 /**
  * action definitions
  */
-export const GET_APPLICATION = '@@aplication/GET_APPLICATION';
-export const GET_APPLICATION_SUCCESS = '@@aplication/GET_APPLICATION_SUCCESS';
-export const GET_APPLICATION_FAILURE = '@@aplication/GET_APPLICATION_FAILURE';
-export const SET_APPLICATION = '@@aplication/SET_APPLICATION';
-export const SET_APPLICATION_SUCCESS = '@@aplication/SET_APPLICATION_SUCCESS';
-export const SET_APPLICATION_FAILURE = '@@aplication/SET_APPLICATION_FAILURE';
-export const UPDATE_APPLICATION = '@@aplication/UPDATE_APPLICATION';
-export const UPDATE_APPLICATION_SUCCESS = '@@aplication/UPDATE_APPLICATION';
-export const UPDATE_APPLICATION_FAILURE = '@@aplication/UPDATE_APPLICATION_FAILURE';
+export const GET_APPLICATION = '@@application/GET_APPLICATION';
+export const GET_APPLICATION_SUCCESS = '@@application/GET_APPLICATION_SUCCESS';
+export const GET_APPLICATION_FAILURE = '@@application/GET_APPLICATION_FAILURE';
+export const SET_APPLICATION = '@@application/SET_APPLICATION';
+export const SET_APPLICATION_SUCCESS = '@@application/SET_APPLICATION_SUCCESS';
+export const SET_APPLICATION_FAILURE = '@@application/SET_APPLICATION_FAILURE';
+export const UPDATE_APPLICATION = '@@application/UPDATE_APPLICATION';
+export const UPDATE_APPLICATION_SUCCESS = '@@application/UPDATE_APPLICATION';
+export const UPDATE_APPLICATION_FAILURE = '@@application/UPDATE_APPLICATION_FAILURE';
 export const AUTOSAVE_APPLICATION = '@@application/AUTOSAVE_APPLICATION';
+export const AUTOSAVE_APPLICATION_SUCCESS = '@@application/AUTOSAVE_APPLICATION_SUCCESS';
 export const AUTOSAVE_APPLICATION_FAILURE = '@@application/AUTOSAVE_APPLICATION_FAILURE';
 
 /**
