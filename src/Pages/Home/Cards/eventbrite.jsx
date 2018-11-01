@@ -44,7 +44,7 @@ class eventbrite extends Component {
     const status = this.status();
     return (
       <Card>
-        <CardHeader title="Application Status" />
+        <CardHeader title="Ticket Status" />
         <CardContent>
           <Typography align="center" variant="display1">
             {applicationStates[status].name}
