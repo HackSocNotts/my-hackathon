@@ -4,23 +4,18 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createFlash } from '../../Modules/Flash';
 import { getAttendee } from '../../Modules/Eventbrite';
+import requireAttendee from '../requireAttendee';
 
 
 const requireTicket = () => (InnerComponent) => {
   class Authenticate extends Component {
     componentWillMount() {
       const {
-        auth,
         eventbrite,
-        fetchAttendee,
         flash,
       } = this.props;
       const { router } = this.context;
-      if (auth.isLoaded && eventbrite.attendee === null) {
-        fetchAttendee();
-      }
-
-      if (eventbrite.attendee === null && eventbrite.error === 'No ticket') {
+      if (!eventbrite.attendee.exists) {
         flash('warn', 'Don\'t have a ticket', 'You need to have a ticket before providing your details');
         router.history.push('/');
       }
@@ -28,17 +23,12 @@ const requireTicket = () => (InnerComponent) => {
 
     componentDidUpdate() {
       const {
-        auth,
         eventbrite,
-        fetchAttendee,
         flash,
       } = this.props;
       const { router } = this.context;
-      if (auth.isLoaded && eventbrite.attendee === null) {
-        fetchAttendee();
-      }
 
-      if (eventbrite.attendee === null && eventbrite.error === 'No ticket') {
+      if (!eventbrite.attendee.exists) {
         flash('warn', 'Don\'t have a ticket', 'You need to have a ticket before providing your details');
         router.history.push('/');
       }
@@ -77,6 +67,7 @@ const requireTicket = () => (InnerComponent) => {
   });
 
   return compose(
+    requireAttendee,
     connect(mapStateToProps, mapDispatchToProps),
   )(Authenticate);
 };
