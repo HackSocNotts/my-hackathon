@@ -61,6 +61,8 @@ const siteVars = {
    * @default http://localhost:3000
    */
   websiteUrl: process.env.REACT_APP_WEB_URL,
+
+  hackathonDate: '2018-11-24',
 };
 
 /**
