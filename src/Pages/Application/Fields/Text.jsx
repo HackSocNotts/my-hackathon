@@ -20,6 +20,7 @@ class Text extends Component {
       label,
       helpText,
       type,
+      disabled,
     } = this.props;
     return (
       <FormControl className={classes.margin}>
@@ -32,6 +33,7 @@ class Text extends Component {
           {...input}
           error={!!error && touched}
           type={type}
+          disabled={disabled}
         />
         {!!helpText && (
         <FormHelperText>
@@ -54,11 +56,13 @@ Text.propTypes = {
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string,
   type: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 Text.defaultProps = {
   helpText: null,
   type: 'text',
+  disabled: false,
 };
 
 export default compose(

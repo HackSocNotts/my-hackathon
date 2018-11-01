@@ -96,6 +96,7 @@ const Control = props => (
       },
     }}
     {...props.selectProps.textFieldProps}
+    disabled={!!props.isDisabled}
   />
 );
 
@@ -168,6 +169,7 @@ class FixedOptionsDropdown extends Component {
       placeholder,
       label,
       helpText,
+      disabled,
     } = this.props;
 
     const selectStyles = {
@@ -206,6 +208,7 @@ class FixedOptionsDropdown extends Component {
           value={value}
           onChange={onChange}
           error={!!error && touched}
+          isDisabled={disabled}
         />
         {!!helpText && (
         <FormHelperText>
@@ -233,10 +236,12 @@ FixedOptionsDropdown.propTypes = {
   placeholder: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 FixedOptionsDropdown.defaultProps = {
   helpText: null,
+  disabled: false,
 };
 
 export default withStyles(styles, { withTheme: true })(FixedOptionsDropdown);

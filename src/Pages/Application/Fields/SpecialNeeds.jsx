@@ -11,7 +11,7 @@ import styles from '../styles';
 
 class SpecialNeeds extends Component {
   render() {
-    const { classes, input } = this.props;
+    const { classes, input, disabled } = this.props;
     return (
       <FormControl className={classes.margin}>
         <InputLabel htmlFor="special_needs">Special Needs</InputLabel>
@@ -23,6 +23,7 @@ class SpecialNeeds extends Component {
           rows={2}
           rowsMax={5}
           {...input}
+          disabled={disabled}
         />
       </FormControl>
     );
@@ -32,6 +33,11 @@ class SpecialNeeds extends Component {
 SpecialNeeds.propTypes = {
   classes: PropTypes.object.isRequired,
   input: PropTypes.any.isRequired,
+  disabled: PropTypes.bool,
+};
+
+SpecialNeeds.defaultProps = {
+  disabled: false,
 };
 
 export default compose(

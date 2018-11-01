@@ -16,12 +16,20 @@ class OptIn extends Component {
       input: { name, value, ...inputProps },
       meta: { error, touched },
       label,
+      disabled,
     } = this.props;
     return (
       <FormGroup row>
         <FormControlLabel
-          control={<Checkbox name={name} value={name} checked={!!value} {...inputProps} />
-          }
+          control={(
+            <Checkbox
+              name={name}
+              value={name}
+              checked={!!value}
+              {...inputProps}
+              disabled={disabled}
+            />
+          )}
           label={label}
         />
         {!!error && touched && (
@@ -38,6 +46,11 @@ OptIn.propTypes = {
   input: PropTypes.any.isRequired,
   meta: PropTypes.object.isRequired,
   label: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
+};
+
+OptIn.defaultProps = {
+  disabled: false,
 };
 
 export default compose(

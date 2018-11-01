@@ -40,22 +40,26 @@ class Application extends Component {
           label="Name"
           helpText="Your full legal name"
           component={Fields.TextField}
+          disabled={status !== 'INCOMPLETE'}
         />
         <Field
           name="email"
           label="Email"
           component={Fields.TextField}
+          disabled={status !== 'INCOMPLETE'}
         />
         <Field
           name="phone"
           label="Phone Number"
           component={Fields.TextField}
+          disabled={status !== 'INCOMPLETE'}
         />
         <Field
           name="birthdate"
           label="Birth Date"
           component={Fields.TextField}
           type="date"
+          disabled={status !== 'INCOMPLETE'}
         />
 
         <Typography variant="title" gutterBottom>
@@ -67,21 +71,25 @@ class Application extends Component {
           placeholder="Search for your school"
           label="School"
           options={schools.map(school => ({ label: school, value: school }))}
+          disabled={status !== 'INCOMPLETE'}
         />
         <Field
           name="major"
           label="Major"
           component={Fields.TextField}
+          disabled={status !== 'INCOMPLETE'}
         />
         <Field
           name="levelOfStudy"
           label="Level of Study"
           component={Fields.TextField}
+          disabled={status !== 'INCOMPLETE'}
         />
         <Field
           name="graduation"
           label="Graduation Year"
           component={Fields.TextField}
+          disabled={status !== 'INCOMPLETE'}
         />
 
         <Typography variant="title" gutterBottom>
@@ -93,6 +101,7 @@ class Application extends Component {
           placeholder="Please select an option"
           options={genders.map(gender => ({ label: gender, value: gender }))}
           component={Fields.CreatableDropdown}
+          disabled={status !== 'INCOMPLETE'}
         />
         <Field
           name="ethnicity"
@@ -100,6 +109,7 @@ class Application extends Component {
           label="Race/Ethnicity"
           options={ethnicities.map(ethnicity => ({ label: ethnicity, value: ethnicity }))}
           component={Fields.CreatableDropdown}
+          disabled={status !== 'INCOMPLETE'}
         />
 
         <Typography variant="title" gutterBottom>
@@ -114,6 +124,7 @@ class Application extends Component {
             value: requirement,
           }))}
           component={Fields.CreatableDropdown}
+          disabled={status !== 'INCOMPLETE'}
         />
         <Field
           name="shirtSize"
@@ -121,6 +132,7 @@ class Application extends Component {
           placeholder="Select your shirt size."
           options={shirtSizes.map(option => ({ label: option, value: option }))}
           component={Fields.FixedOptionsDropdown}
+          disabled={status !== 'INCOMPLETE'}
         />
         <Field name="specialNeeds" component={Fields.SpecialNeedsField} />
 
@@ -131,26 +143,31 @@ class Application extends Component {
           name="mlhCoC"
           label="I have read and agree to the MLH Code of Conduct.*"
           component={Fields.OptIn}
+          disabled={status !== 'INCOMPLETE'}
         />
         <Field
           name="mlhPrivacy"
           label="I agree to the MLH Privacy Policy.*"
           component={Fields.OptIn}
+          disabled={status !== 'INCOMPLETE'}
         />
         <Field
           name="mlhContest"
           label="I agree to the MLH Contest Terms and Conditions.*"
           component={Fields.OptIn}
+          disabled={status !== 'INCOMPLETE'}
         />
         <Field
           name="mlhSharring"
           label="I authorize you to share my application/registration information for event administration, ranking, MLH administration, pre- and post-event informational e-mails in-line with the MLH Privacy Policy."
           component={Fields.OptIn}
+          disabled={status !== 'INCOMPLETE'}
         />
         <Field
           name="mlhMarketting"
           label="I want to recieve occasional messages about hackathons in-line with the MLH Privacy Policy."
           component={Fields.OptIn}
+          disabled={status !== 'INCOMPLETE'}
         />
 
         <Button
@@ -202,7 +219,7 @@ const mapStateToProps = state => ({
       levelOfStudy: state.firebase.profile.myMlhData.level_of_study,
       specialNeeds: state.firebase.profile.myMlhData.special_needs,
     } : state.application.application,
-    application: state.application.application,
+  application: state.application.application,
 });
 
 // eslint-disable-next-line

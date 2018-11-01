@@ -96,6 +96,7 @@ const Control = props => (
       },
     }}
     {...props.selectProps.textFieldProps}
+    disabled={!!props.isDisabled}
   />
 );
 
@@ -175,6 +176,7 @@ class CreatableDropdown extends Component {
       placeholder,
       label,
       helpText,
+      disabled,
     } = this.props;
 
     const selectStyles = {
@@ -215,6 +217,7 @@ class CreatableDropdown extends Component {
           onFocus={onFocus}
           onBlur={() => onBlur(value)}
           error={!!error && touched}
+          isDisabled={disabled}
         />
         {!!helpText && (
         <FormHelperText>
@@ -242,10 +245,12 @@ CreatableDropdown.propTypes = {
   placeholder: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 CreatableDropdown.defaultProps = {
   helpText: null,
+  disabled: false,
 };
 
 export default withStyles(styles, { withTheme: true })(CreatableDropdown);
