@@ -27,6 +27,7 @@ class Application extends Component {
       classes,
       handleSubmit,
       valid,
+      application: { status },
     } = this.props;
 
     return (
@@ -157,7 +158,7 @@ class Application extends Component {
           variant="outlined"
           color="primary"
           className={classes.button}
-          disabled={!valid}
+          disabled={!valid || status === 'SUBMITTED'}
         >
           Submit
         </Button>
@@ -170,6 +171,7 @@ Application.propTypes = {
   classes: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   valid: PropTypes.bool.isRequired,
+  application: PropTypes.object.isRequired,
 };
 
 // eslint-disable-next-line
@@ -200,6 +202,7 @@ const mapStateToProps = state => ({
       levelOfStudy: state.firebase.profile.myMlhData.level_of_study,
       specialNeeds: state.firebase.profile.myMlhData.special_needs,
     } : state.application.application,
+    application: state.application.application,
 });
 
 // eslint-disable-next-line
