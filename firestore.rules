@@ -1,7 +1,70 @@
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write;
+  
+  	function isAdmin() {
+  		return request.auth.token.admin == true;
+  	}
+  
+  	function isOwner(uid) {
+  		return request.auth.uid == uid;
+  	}
+    
+    function uid() {
+    	return request.auth.uid;
+    }
+    
+    function getApplication(uid) {
+    	return get(/databases/$(database)/documents/applications/$(uid));
+    }
+    
+    
+    match /users/{user_id} {
+    	// Allow user to read own profile document
+    	allow read: if isOwner(user_id) || isAdmin();
+      // Allow user to initialise profile
+      allow create: if isOwner(user_id);
+      // Allow user to update profile data only
+      allow update: if isOwner(user_id)
+      		// &&
+        // !request.resource.data.keys().hasAny(['admin', 'subscribed']);
+    }
+    
+    // Allow user to create and view their application
+    match /applications/{user_id} {
+			allow create, read: if isOwner(user_id);
+      allow update: if resource.data.status == 'incomplete' || resource.data.status == null;
+      allow read, write: if isAdmin();
+    }
+    
+    // Allow user to read own notifications
+    match /notifications/{notification_id} {
+    	allow read: if isOwner(resource.data.to.uid);
+    }
+    
+    // Only allow confirmed attendees to read and create teams
+    match /team/{team_id} {
+    	allow read, create: if getApplication(uid()).data.status == 'confirmed';
+    }
+    
+    // Only admins have read access to logs
+    match /logs/{document=**} {
+    	allow read: if isAdmin();
+    }
+    
+    // Only admins have read access to settings
+    match /settings/{document=**} {
+    	allow read: if isAdmin();
+    }
+    
+    // Allow user to see eventbrite attendee document for themself
+    match /settings/eventbrite/attendees/{attendee} {
+    	allow read: if resource.data.profile.email == request.auth.token.email;
+    }
+    
+    //Allow authed users to read general settings and admins to edit
+    match /settings/general {
+    	allow read: if true;
+      allow write: if isAdmin();
     }
   }
 }
