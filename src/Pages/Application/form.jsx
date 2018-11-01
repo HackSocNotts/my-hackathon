@@ -55,6 +55,7 @@ class Application extends Component {
           name="birthdate"
           label="Birth Date"
           component={Fields.TextField}
+          type="date"
         />
 
         <Typography variant="title" gutterBottom>
