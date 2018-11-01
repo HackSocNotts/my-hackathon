@@ -13,6 +13,7 @@ export const UPDATE_APPLICATION_FAILURE = '@@application/UPDATE_APPLICATION_FAIL
 export const AUTOSAVE_APPLICATION = '@@application/AUTOSAVE_APPLICATION';
 export const AUTOSAVE_APPLICATION_SUCCESS = '@@application/AUTOSAVE_APPLICATION_SUCCESS';
 export const AUTOSAVE_APPLICATION_FAILURE = '@@application/AUTOSAVE_APPLICATION_FAILURE';
+export const SUBMIT_APPLICATION = '@@application/SUBMIT_APPLICATION';
 
 /**
  * action creators
@@ -83,4 +84,9 @@ export const autoSaveApplicationSuccess = () => ({
 export const autoSaveApplicationFailure = error => ({
   type: AUTOSAVE_APPLICATION_FAILURE,
   payload: error,
+});
+
+export const submitApplication = application => ({
+  type: SUBMIT_APPLICATION,
+  payload: application,
 });

@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import * as Fields from './Fields';
 
 import store from '../../Store';
-import { autosaveApplication } from '../../Modules/Application';
+import { autosaveApplication, submitApplication } from '../../Modules/Application';
 import { validate } from '../../Modules/Application/utils';
 
 import shirtSizes from '../../Data/shirtSizes';
@@ -221,6 +221,6 @@ export default compose(
     destroyOnUnmount: false,
     validate,
     onChange: values => store.dispatch(autosaveApplication(values)),
-    onSubmit: values => console.log('submitting', values),
+    onSubmit: values => store.dispatch(submitApplication(values)),
   }),
 )(Application);
