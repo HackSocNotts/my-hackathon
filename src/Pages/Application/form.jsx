@@ -27,7 +27,6 @@ class Application extends Component {
       classes,
       handleSubmit,
       valid,
-      pristine,
     } = this.props;
 
     return (
@@ -158,7 +157,7 @@ class Application extends Component {
           variant="outlined"
           color="primary"
           className={classes.button}
-          disabled={!valid || pristine}
+          disabled={!valid}
         >
           Submit
         </Button>
@@ -171,7 +170,6 @@ Application.propTypes = {
   classes: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   valid: PropTypes.bool.isRequired,
-  pristine: PropTypes.bool.isRequired,
 };
 
 // eslint-disable-next-line
