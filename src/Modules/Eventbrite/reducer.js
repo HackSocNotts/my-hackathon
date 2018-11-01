@@ -47,18 +47,49 @@ const reducer = (state = initalState, action) => {
       };
 
     case GET_ATTENDEE:
-      return state;
+      return {
+        ...state,
+        attendee: {
+          ...state.attendee,
+          isLoaded: false,
+          loading: true,
+        },
+      };
 
     case GET_ATTENDEE_SUCCESS:
       return {
         ...state,
-        attendee: action.payload,
+        attendee: {
+          ...state.attendee,
+          ...action.payload,
+          isLoaded: true,
+          loading: false,
+          exists: true,
+        },
         error: null,
       };
 
     case GET_ATTENDEE_FAILURE:
+      if (action.payload === 'No ticket') {
+        return {
+          ...state,
+          attendee: {
+            ...state.attendee,
+            isLoaded: true,
+            loading: false,
+            exists: false,
+          },
+          error: action.payload,
+        };
+      }
+
       return {
         ...state,
+        attendee: {
+          ...state.attendee,
+          isLoaded: false,
+          loading: false,
+        },
         error: action.payload,
       };
 
