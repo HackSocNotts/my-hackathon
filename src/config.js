@@ -63,6 +63,8 @@ const siteVars = {
   websiteUrl: process.env.REACT_APP_WEB_URL,
 
   hackathonDate: '2018-11-24',
+
+  eventbriteUrl: '#',
 };
 
 /**

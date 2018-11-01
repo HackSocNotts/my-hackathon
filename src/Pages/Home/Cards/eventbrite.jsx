@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import Card from '@material-ui/core/Card';
@@ -12,7 +13,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 import styles from '../styles';
-import { applicationStates, dashboardButtons } from '../../../config';
+import { applicationStates, dashboardButtons, siteVars } from '../../../config';
 import { getApplication } from '../../../Modules/Application';
 import requireAttendee from '../../../Components/requireAttendee';
 
@@ -21,6 +22,7 @@ class eventbrite extends Component {
     super(props);
 
     this.status = this.status.bind(this);
+    this.goToApplication = this.goToApplication.bind(this);
   }
 
   status() {
@@ -31,6 +33,11 @@ class eventbrite extends Component {
 
     // States are NOTAPPLIED, INCOMPLETE, or SUBMITTED
     return application.status;
+  }
+
+  goToApplication() {
+    const { goto } = this.props;
+    goto('/application');
   }
 
   render() {
@@ -58,8 +65,8 @@ class eventbrite extends Component {
             </Button>
           )}
           {(status === 'NOTAPPLIED') && (
-            <Button size="small" color="primary" onClick={this.handleAccept}>
-              {dashboardButtons.accept}
+            <Button size="small" color="primary" href={siteVars.eventbriteUrl} rel="noreferrer noopener">
+              Order ticket
             </Button>
           )}
         </CardActions>
@@ -71,6 +78,7 @@ class eventbrite extends Component {
 eventbrite.propTypes = {
   eventbriteAttendee: PropTypes.object,
   application: PropTypes.object.isRequired,
+  goto: PropTypes.func.isRequired,
 };
 
 eventbrite.defaultProps = {
@@ -85,6 +93,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   loadApplication: () => dispatch(getApplication()),
+  goto: path => dispatch(push(path)),
 });
 
 export default compose(
