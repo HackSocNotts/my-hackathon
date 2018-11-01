@@ -95,7 +95,7 @@ class dashboardContainer extends Component {
               <Typography variant="title" color="inherit" noWrap className={classes.title}>
                 {pageTitle}
               </Typography>
-              <NotificationsMenu />
+              {/* <NotificationsMenu /> */}
               <UserMenu />
             </Toolbar>
             { isLoading ? <LinearProgress color="secondary" /> : <React.Fragment /> }
