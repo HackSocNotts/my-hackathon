@@ -31,17 +31,10 @@ export const updateApplication = applicaiton => ({
   payload: applicaiton,
 });
 
-export const autosaveApplication = applicaiton => (dispatch) => {
-  dispatch({
-    type: AUTOSAVE_APPLICATION,
-    payload: applicaiton,
-  });
-  try {
-    dispatch(updateApplication(applicaiton));
-  } catch (error) {
-    dispatch(autosaveApplication(error));
-  }
-};
+export const autosaveApplication = applicaiton => ({
+  type: AUTOSAVE_APPLICATION,
+  payload: applicaiton,
+});
 
 export const getApplicationSuccess = application => ({
   type: GET_APPLICATION_SUCCESS,
@@ -78,16 +71,14 @@ export const updateApplicationSuccess = () => ({
   type: UPDATE_APPLICATION_SUCCESS,
 });
 
-export const updateApplicationFailure = (error, application) => (dispatch) => {
-  dispatch({
-    type: UPDATE_APPLICATION_FAILURE,
-    payload: error,
-  });
+export const updateApplicationFailure = error => ({
+  type: UPDATE_APPLICATION_FAILURE,
+  payload: error,
+});
 
-  if (error.code === 'not-found') {
-    dispatch(setApplication(application));
-  }
-};
+export const autoSaveApplicationSuccess = () => ({
+  type: AUTOSAVE_APPLICATION_SUCCESS,
+});
 
 export const autoSaveApplicationFailure = error => ({
   type: AUTOSAVE_APPLICATION_FAILURE,
