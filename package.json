@@ -1,23 +1,67 @@
 {
   "name": "my-hackathon",
+  "description": "Hackathon registration and managemnet tool made by HackSoc Nottingham",
   "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
-    "react-scripts": "1.1.4"
-  },
+  "author": "Aaron Osher <aaron@aaronosher.io>",
+  "license": "AGPL-3.0",
+  "homepage": "https://myhackathon-dev.firebaseapp.com/",
   "scripts": {
     "start": "react-scripts start",
+    "serve": "REACT_APP_LOCAL_FUNCTIONS=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && firebase deploy --only hosting"
+  },
+  "dependencies": {
+    "@material-ui/core": "^1.5.0",
+    "@material-ui/icons": "^2.0.2",
+    "classnames": "^2.2.6",
+    "connected-react-router": "^4.4.1",
+    "fg-loadcss": "^2.0.1",
+    "firebase": "^5.5.5",
+    "history": "^4.7.2",
+    "material-dashboard-react": "^1.4.1",
+    "material-ui-pickers": "^1.0.1",
+    "moment": "^2.22.2",
+    "prop-types": "^15.6.2",
+    "react": "^16.4.2",
+    "react-device-detect": "^1.5.9",
+    "react-dom": "^16.4.2",
+    "react-redux": "^5.0.7",
+    "react-redux-firebase": "^2.1.8",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.4",
+    "react-select": "^2.1.0",
+    "redux": "^4.0.0",
+    "redux-firestore": "^0.5.7",
+    "redux-form": "^7.4.2",
+    "redux-observable": "^1.0.0",
+    "redux-thunk": "^2.3.0",
+    "redux-wait-for-action": "^0.0.8",
+    "rxfire": "^3.0.7",
+    "rxjs": "^6.3.3",
+    "typeface-roboto": "^0.0.54"
   },
   "devDependencies": {
+    "babel-eslint": "8",
     "eslint": "^5.3.0",
     "eslint-config-airbnb": "17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HackSocNotts/my-hackathon.git"
+  },
+  "keywords": [
+    "Hackathon",
+    "HackSoc",
+    "HackSocNotts",
+    "myHackathon"
+  ],
+  "bugs": {
+    "url": "https://github.com/HackSocNotts/my-hackathon/issues"
   }
 }
