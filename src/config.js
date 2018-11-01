@@ -64,7 +64,7 @@ const siteVars = {
 
   hackathonDate: '2018-11-24',
 
-  eventbriteUrl: '#',
+  eventbriteUrl: 'https://hacknotts2018.eventbrite.com',
 };
 
 /**
@@ -97,16 +97,16 @@ const applicationStates = {
    * Applications are incomplete by default, and will remain as such until submitted
    */
   INCOMPLETE: {
-    name: 'Incomplete',
-    message: "You've not submitted your application yet.",
+    name: 'Unconfirmed',
+    message: "You've not submitted your details yet.",
   },
   /**
    * Submitted is once a user has submitted their application for review,
    * and no action has been taken on it
    */
   SUBMITTED: {
-    name: 'Submitted',
-    message: 'Your application has been submitted and is under review.',
+    name: 'Confirmed',
+    message: 'Your details has been submitted, and your ticket has been confirmed.',
   },
   /**
    * Accepted is the state of an application when it's been accepted to attend,
@@ -166,14 +166,14 @@ const applicationStates = {
    * Not applied is when you use Eventbrite to release tickets and the user hasn't applied
    */
   NOTAPPLIED: {
-    name: 'Not applied',
+    name: 'Not Reserved',
     message: 'You\'ve not got a ticket on Eventbrite yet.',
   },
 };
 
 const dashboardButtons = {
-  continue: 'Continue Application',
-  review: 'Review Application',
+  continue: 'Finish Details',
+  review: 'Review Details',
   withdraw: 'Witdhraw Application',
   accept: 'Confirm Attendance',
   decline: 'Decline Attendence',
@@ -191,7 +191,7 @@ const navigationPages = {
    * Applicaiton is the page where the user fills in their details
    * @default 'Application'
    */
-  applciation: 'Application',
+  applciation: 'Details',
 
   /**
    * Team is the page where users can find and make teams
