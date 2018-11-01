@@ -14,6 +14,8 @@ import Typography from '@material-ui/core/Typography';
 import styles from '../styles';
 import { applicationStates, dashboardButtons } from '../../../config';
 import { getApplication } from '../../../Modules/Application';
+import requireAttendee from '../../../Components/requireAttendee';
+import requireApplication from '../../../Components/requireApplication';
 
 class eventbrite extends Component {
   constructor(props) {
@@ -24,7 +26,7 @@ class eventbrite extends Component {
 
   status() {
     const { eventbriteAttendee, application } = this.props;
-    if (!eventbriteAttendee) {
+    if (!eventbriteAttendee.exists) {
       return 'NOTAPPLIED';
     }
 
@@ -68,8 +70,7 @@ class eventbrite extends Component {
 }
 
 eventbrite.propTypes = {
-  eventbriteAttendee: PropTypes.oneOf([PropTypes.object, PropTypes.bool]),
-  loadApplication: PropTypes.func.isRequired,
+  eventbriteAttendee: PropTypes.object,
   application: PropTypes.object.isRequired,
 };
 
@@ -88,6 +89,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default compose(
+  requireApplication,
+  requireAttendee,
   withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps),
 )(eventbrite);
