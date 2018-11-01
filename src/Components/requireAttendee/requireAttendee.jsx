@@ -1,7 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { getAttendee } from '../../Modules/Eventbrite';
+import requireAuthLoaded from '../requireAuthLoaded/requireAuthLoaded';
 
 const requireAttendee = (NestedComponent) => {
   class RequireAttendee extends Component {
@@ -28,13 +30,16 @@ const requireAttendee = (NestedComponent) => {
     eventbriteAttendee: PropTypes.object.isRequired,
   };
 
-  return connect(
-    state => ({
-      eventbriteAttendee: state.eventbrite.attendee,
-    }),
-    dispatch => ({
-      loadAttendee: () => dispatch(getAttendee()),
-    }),
+  return compose(
+    requireAuthLoaded,
+    connect(
+      state => ({
+        eventbriteAttendee: state.eventbrite.attendee,
+      }),
+      dispatch => ({
+        loadAttendee: () => dispatch(getAttendee()),
+      }),
+    ),
   )(RequireAttendee);
 };
 
