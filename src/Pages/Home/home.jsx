@@ -12,23 +12,17 @@ import EventbriteCard from './Cards/eventbrite';
 import StandardCard from './Cards/standard';
 import styles from './styles';
 import { getAttendee } from '../../Modules/Eventbrite';
+import requireApplication from '../../Components/requireApplication';
 
 class home extends Component {
-  componentDidUpdate() {
-    const { auth, eventbriteAttendee, fetchAttendee } = this.props;
-    if (auth.isLoaded && eventbriteAttendee === null) {
-      fetchAttendee();
-    }
-  }
-
   render() {
-    const { auth, eventbriteAttendee, generalSettings: { eventbrite } } = this.props;
+    const { auth, generalSettings: { eventbrite } } = this.props;
 
     return (
-      <DashboardContainer>
+      <React.Fragment>
         { auth.isLoaded && !eventbrite && <StandardCard />}
         { eventbrite && <EventbriteCard />}
-      </DashboardContainer>
+      </React.Fragment>
     );
   }
 }
@@ -39,14 +33,11 @@ home.contextTypes = {
 
 home.propTypes = {
   auth: PropTypes.object,
-  eventbriteAttendee: PropTypes.oneOf([PropTypes.object, PropTypes.bool]),
-  fetchAttendee: PropTypes.func.isRequired,
   generalSettings: PropTypes.object,
 };
 
 home.defaultProps = {
   auth: null,
-  eventbriteAttendee: null,
   generalSettings: null,
 };
 
@@ -59,7 +50,8 @@ const mapDispatchToProps = dispatch => ({
   fetchAttendee: (() => dispatch(getAttendee())),
 });
 
-export default compose(
+const Home = compose(
+  requireApplication,
   firebaseConnect(),
   withStyles(styles),
   connect(
@@ -69,3 +61,12 @@ export default compose(
   ),
   connect(mapStateToProps, mapDispatchToProps),
 )(home);
+
+
+const Wrapper = () => (
+  <DashboardContainer>
+    <Home />
+  </DashboardContainer>
+);
+
+export default Wrapper;
