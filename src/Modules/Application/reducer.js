@@ -23,7 +23,7 @@ const reducer = (state = initalState, action) => {
       return {
         ...state,
         application: action.payload,
-        status: action.payload.status.toUpperCase(),
+        status: action.payload.status ? action.payload.status.toUpperCase() : 'INCOMPLETE',
         loading: false,
         isLoaded: true,
       };
