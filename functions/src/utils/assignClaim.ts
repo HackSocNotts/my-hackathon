@@ -1,11 +1,13 @@
 import { auth } from 'firebase-admin';
-import { https } from 'firebase-functions';
+import { https, config } from 'firebase-functions';
 import logMessage, { LogType } from './log';
 
 const { HttpsError } = https;
 
 const assignClaim = (issuer: auth.UserRecord, target: auth.UserRecord, claim: any) => {
-  if (!issuer.customClaims || !issuer.customClaims['admin']) {
+  console.log(config().superadmin.email !== issuer.email, config().superadmin.email, issuer.email);
+  if (config().superadmin.email !== issuer.email
+    && (!issuer.customClaims || !issuer.customClaims['admin'])) {
     return logMessage({ issuer, target, message: `Attempted to assign: ${JSON.stringify(claim)}`, type: LogType.ClaimAssignment })
       .then(() => {
         throw new HttpsError('permission-denied', 'Issuer not an admin'); 
