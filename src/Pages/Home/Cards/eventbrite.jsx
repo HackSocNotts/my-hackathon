@@ -52,6 +52,13 @@ class eventbrite extends Component {
           <Typography>
             {applicationStates[status].message}
           </Typography>
+          {status === 'NOTAPPLIED' && (
+          <Typography variant="caption">
+            Note that we check your ticket status by looking up your email. If your login email doesn\'t match your ticket email, please go to the my account page and change it.
+            <br />
+            You may need to login and out for the system to update.
+          </Typography>
+          )}
         </CardContent>
         <CardActions>
           {(status === 'INCOMPLETE') && (
