@@ -4,6 +4,7 @@ import updateEpic from './epics/updateEpic';
 import autoSaveEpic from './epics/autoSaveEpic';
 import setEpic from './epics/setEpic';
 import submitEpic from './epics/submitEpic';
+import submitSuccesfullEpic from './epics/submitSuccesfullEpic';
 
 const epic = combineEpics(
   getApplicationEpic,
@@ -11,6 +12,7 @@ const epic = combineEpics(
   autoSaveEpic,
   setEpic,
   submitEpic,
+  submitSuccesfullEpic,
 );
 
 export default epic;
