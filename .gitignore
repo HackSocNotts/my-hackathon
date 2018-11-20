@@ -34,3 +34,4 @@ functions/\.runtimeconfig\.json
 \.runtimeconfig\.json
 
 functions/serviceAccount\.json
+.firebase/

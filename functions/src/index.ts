@@ -20,6 +20,7 @@ import {
   fetchTickets as FetchEventbriteTickets,
   orderPlaced as EventbriteOrderPlaced,
 } from './providers/eventbrite';
+import { attendees as exportAttendees } from './export';
 
 export const makeAdmin = https.onCall(MakeAdmin);
 export const removeAdmin = https.onCall(RemoveAdmin);
@@ -31,3 +32,4 @@ export const authEventbrite = https.onCall(EventbriteAuthFlow);
 export const saveEventrbite = https.onCall(SaveEvenbriteEvent);
 export const fetchEventbriteTickets = https.onCall(FetchEventbriteTickets);
 export const eventbriteOrderPlaced = https.onRequest(EventbriteOrderPlaced);
+export const ExportAttendees = https.onRequest(exportAttendees);
