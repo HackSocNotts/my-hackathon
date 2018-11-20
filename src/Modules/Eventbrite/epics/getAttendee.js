@@ -20,7 +20,9 @@ const getAttendeeEpic = (action$, state$) => action$.pipe(
   switchMap((state) => {
     const { firebase: { auth: { email } } } = state;
     const db = getFirebase().firestore();
-    const query = db.collection('settings/eventbrite/attendees').where('profile.email', '==', email);
+    const query = db.collection('settings/eventbrite/attendees')
+      .where('profile.email', '==', email)
+      .limit(1);
     return collectionData(query, 'id');
   }),
   map((documents) => {
